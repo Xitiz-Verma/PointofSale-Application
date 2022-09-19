@@ -1,1 +1,0 @@
-# PointofSale-Application
