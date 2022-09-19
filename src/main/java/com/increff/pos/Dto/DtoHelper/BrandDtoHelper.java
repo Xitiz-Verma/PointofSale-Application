@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static com.increff.pos.Util.DataUtil.checkNotNullBulkUtil;
 import static com.increff.pos.Util.ErrorUtil.throwError;
 import static java.util.Objects.isNull;
 
@@ -60,21 +61,6 @@ public class BrandDtoHelper {
         }
     }
 
-    public static <T> Boolean checkNotNullBulkUtil(T form) {
-        try {
-            Field[] fields = form.getClass().getDeclaredFields();
-            for (Field m : fields) {
-                m.setAccessible(true);
-                if (isNull(m.get(form))) {
-                    System.out.println(m.get(form) + " " + m.getName());
-                    return false;
-                }
-            }
-        } catch (IllegalAccessException err) {
-            System.out.println(err);
-        }
-        return true;
-    }
 
     public static void checkDuplicates(List<BrandForm> brandFormList) throws ApiException {
         Set<String> brandSet = new HashSet<>();

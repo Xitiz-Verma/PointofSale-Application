@@ -16,8 +16,10 @@ public class ProductDao extends AbstractDao{
     private final static String SELECT_BY_CATEGORY = "select p from ProductPojo where category=:category";
     private final static String SELECT_BY_BRAND_CATEGORY = "select p from ProductPojo where brand=:brand and category=:category";
 
-    public void add(ProductPojo productPojo){
+    public void add(ProductPojo productPojo)
+    {
         addAbs(productPojo);
+
     }
 
     public ProductPojo selectByBarcode(String barcode)
@@ -31,5 +33,23 @@ public class ProductDao extends AbstractDao{
         TypedQuery<ProductPojo> query=em().createQuery(SELECT_BY_BRAND_ID, ProductPojo.class);
         query.setParameter("brandId",brandId);
         return query.getResultList();
+    }
+
+    public ProductPojo select(int id)
+    {
+        return select(ProductPojo.class,id);
+    }
+
+    public List<ProductPojo> selectAll()
+    {
+        return selectAll(ProductPojo.class);
+    }
+
+    public ProductPojo selectByBarcodeNotEqualId(String barcode,int id)
+    {
+        TypedQuery<ProductPojo> query = em().createQuery(SELECT_BY_BARCODE_AND_NOT_EQUAL_ID,ProductPojo.class);
+        query.setParameter("barcode",barcode);
+        query.setParameter("id",id);
+        return getSingle(query);
     }
 }

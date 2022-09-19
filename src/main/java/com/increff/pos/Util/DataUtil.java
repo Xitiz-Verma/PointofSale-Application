@@ -37,6 +37,22 @@ public class DataUtil {
             System.out.println(err);
         }
     }
+
+    public static <T> Boolean checkNotNullBulkUtil(T form) {
+        try {
+            Field[] fields = form.getClass().getDeclaredFields();
+            for (Field m : fields) {
+                m.setAccessible(true);
+                if (isNull(m.get(form))) {
+                    System.out.println(m.get(form) + " " + m.getName());
+                    return false;
+                }
+            }
+        } catch (IllegalAccessException err) {
+            System.out.println(err);
+        }
+        return true;
+    }
 }
 
 

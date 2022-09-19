@@ -3,9 +3,9 @@ package com.increff.pos.Service;
 import com.increff.pos.Dao.BrandDao;
 import com.increff.pos.Exception.ApiException;
 import com.increff.pos.Pojo.BrandPojo;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import static com.increff.pos.Util.ErrorUtil.throwError;
 import static java.util.Objects.isNull;
 
 @Service
-@Transactional(rollbackFor = ApiException.class)
+@Transactional(rollbackOn = ApiException.class)
 public class BrandService {
 
     @Autowired
