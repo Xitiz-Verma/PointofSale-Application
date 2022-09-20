@@ -18,7 +18,7 @@ public class BrandPojo {
     @Id
     @TableGenerator(name = BRAND_GENERATOR, initialValue = BRAND_INITIAL_VALUE)
     @GeneratedValue(strategy = GenerationType.TABLE, generator = BRAND_GENERATOR)
-    private int id;
+    private Integer id;
 
     @Column(nullable = false)
     private String brand;

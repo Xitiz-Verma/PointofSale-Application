@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Api
+@RequestMapping(path="/inventory")
 @RestController
 public class InventoryController {
 
@@ -22,41 +23,41 @@ public class InventoryController {
     private InventoryDto inventoryDto;
 
     @ApiOperation(value="Gets a Inventory Details by Id")
-    @RequestMapping(path="/inventory/{id}", method =RequestMethod.GET)
+    @RequestMapping(path="/{id}", method =RequestMethod.GET)
     public InventoryData getInventory(@PathVariable Integer id)throws ApiException{
         return inventoryDto.get(id);
     }
 
     @ApiOperation(value="Gets all Inventory Details")
-    @RequestMapping(path="/inventory",method= RequestMethod.GET)
+    @RequestMapping(path="",method= RequestMethod.GET)
     public List<InventoryData> getAllInventoryDetails()throws ApiException
     {
         return inventoryDto.getAll();
     }
 
     @ApiOperation(value="Adds Inventory Details")
-    @RequestMapping(path="/inventory",method = RequestMethod.POST)
+    @RequestMapping(path="",method = RequestMethod.POST)
     public InventoryForm insertInventory(@RequestBody InventoryForm inventoryForm)throws ApiException
     {
         return inventoryDto.add(inventoryForm);
     }
 
     @ApiOperation(value="Adds Incentory Details in Bulk")
-    @RequestMapping(path="/inventory/upload",method = RequestMethod.POST)
+    @RequestMapping(path="/upload",method = RequestMethod.POST)
     public Integer bulkInsertInventory(@RequestBody List<InventoryForm> inventoryFormList)throws ApiException
     {
         return inventoryDto.bulkAdd(inventoryFormList);
     }
 
     @ApiOperation(value="Updates an Inventory")
-    @RequestMapping(path="inventory/{id}", method = RequestMethod.PUT)
+    @RequestMapping(path="/{id}", method = RequestMethod.PUT)
     public InventoryUpdateForm updateInventory(@RequestBody InventoryUpdateForm  inventoryUpdateForm,@PathVariable Integer id)throws ApiException
     {
         return inventoryDto.update(inventoryUpdateForm);
     }
 
     @ApiOperation(value="Gets Inventory Report")
-    @RequestMapping(path="/inventory/inventory-reports", method=RequestMethod.GET)
+    @RequestMapping(path="/inventory-reports", method=RequestMethod.GET)
     public List<InventoryReport> getInventoryReport()
     {
         return inventoryDto.getInventoryReport();

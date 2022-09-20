@@ -35,6 +35,14 @@ public class BrandDtoHelper {
         return brandPojo;
     }
 
+    public static List<BrandPojo> convertBrandFormtoBrandPojoList(List<BrandForm> brandFormList){
+        List<BrandPojo> brandPojoList = new ArrayList<>();
+        for (BrandForm brandForm : brandFormList) {
+            brandPojoList.add(convertBrandFormtoBrandPojo(brandForm));
+        }
+        return brandPojoList;
+    }
+
     public static BrandPojo convertBrandDatatoBrandPojo(BrandData brandData) {
         BrandPojo brandPojo = new BrandPojo();
         brandPojo.setId(brandData.getId());
@@ -63,6 +71,7 @@ public class BrandDtoHelper {
 
 
     public static void checkDuplicates(List<BrandForm> brandFormList) throws ApiException {
+
         Set<String> brandSet = new HashSet<>();
         List<String> errorList = new ArrayList<>();
         Integer row = 1;

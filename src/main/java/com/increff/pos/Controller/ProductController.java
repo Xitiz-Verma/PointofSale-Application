@@ -15,6 +15,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Api
+@RequestMapping(path="/products")
 @RestController
 public class ProductController {
 
@@ -22,33 +23,33 @@ public class ProductController {
     private ProductDto productDto;
 
     @ApiOperation(value = "Add a Product Details")
-    @RequestMapping(path = "/products", method = RequestMethod.POST)
+    @RequestMapping(path = "", method = RequestMethod.POST)
     public ProductForm insertProduct(@RequestBody ProductForm productForm) throws ApiException {
         return productDto.add(productForm);
     }
 
     @ApiOperation(value="Add Bulk Product Data")
-    @RequestMapping(path="/products/upload", method=RequestMethod.POST)
+    @RequestMapping(path="/upload", method=RequestMethod.POST)
     public Integer bulkInsertProduct(@RequestBody List<@Valid ProductForm> productFormList)throws ApiException
     {
         return productDto.bulkAdd(productFormList);
     }
 
     @ApiOperation(value = "Gives all Product Details")
-    @RequestMapping(path = "/products", method=RequestMethod.GET)
+    @RequestMapping(path = "", method=RequestMethod.GET)
     public List<ProductData> getAllProductDetails()throws ApiException{
         return productDto.getAll();
     }
 
     @ApiOperation(value=" Get a product by Id")
-    @RequestMapping(path="/products/{id}",method= RequestMethod.GET)
+    @RequestMapping(path="/{id}",method= RequestMethod.GET)
     public ProductData getProduct(@PathVariable int id)throws ApiException
     {
         return productDto.get(id);
     }
 
     @ApiOperation(value= " Update a Product ")
-    @RequestMapping(path="/products" , method =RequestMethod.PUT)
+    @RequestMapping(path="" , method =RequestMethod.PUT)
     public ProductUpdateForm updateProduct(@RequestBody ProductUpdateForm productUpdateForm)throws ApiException
     {
         return productDto.update(productUpdateForm);

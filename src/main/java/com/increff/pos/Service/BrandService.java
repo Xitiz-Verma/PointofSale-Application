@@ -3,13 +3,14 @@ package com.increff.pos.Service;
 import com.increff.pos.Dao.BrandDao;
 import com.increff.pos.Exception.ApiException;
 import com.increff.pos.Pojo.BrandPojo;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static com.increff.pos.Util.DataUtil.normalize;
 import static com.increff.pos.Util.DataUtil.validate;
@@ -17,12 +18,13 @@ import static com.increff.pos.Util.ErrorUtil.throwError;
 import static java.util.Objects.isNull;
 
 @Service
-@Transactional(rollbackOn = ApiException.class)
+@Transactional(rollbackFor = ApiException.class)
 public class BrandService {
 
     @Autowired
     private BrandDao brandDao;
 
+    @Transactional(readOnly = true)
     public List<BrandPojo> getAll() {
         return brandDao.selectAll();
 
@@ -40,18 +42,19 @@ public class BrandService {
         }
         List<String> errorList = new ArrayList<>();
         Integer row = 1;
-        for (BrandPojo brandPojo : brandPojoList) {
-            if (!isNull(selectByBrandCategory(brandPojo.getBrand(), brandPojo.getCategory()))) {
-                errorList.add("Error : Row ->" + (row) + " " + brandPojo.getBrand() + " - " + brandPojo.getCategory() + "pair Already exists");
+        try{
+            for (BrandPojo brandPojo : brandPojoList) {
+                checkUnique(brandPojo);
+                add(brandPojo);
+                row++;
             }
-            row++;
+        }catch (ApiException e){
+            errorList.add(e.getMessage());
+        }catch (Exception e){
+            errorList.add(e.getMessage());
         }
         if (!CollectionUtils.isEmpty(errorList))
             throwError(errorList);
-
-        for (BrandPojo brandPojo : brandPojoList) {
-            add(brandPojo);
-        }
 
     }
 
@@ -91,7 +94,7 @@ public class BrandService {
     }
 
     private void checkUnique(BrandPojo brandPojo) throws ApiException {
-        if (selectByBrandCategory(brandPojo.getBrand(), brandPojo.getCategory()) != null) {
+        if (!Objects.isNull(selectByBrandCategory(brandPojo.getBrand(), brandPojo.getCategory()))) {
             throw new ApiException(brandPojo.getBrand() + " - " + brandPojo.getCategory() + "pair already exists");
         }
     }

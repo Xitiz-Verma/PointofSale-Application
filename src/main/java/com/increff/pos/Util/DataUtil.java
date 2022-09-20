@@ -17,7 +17,8 @@ public class DataUtil {
                     throw new ApiException(e);
                 }
             }
-        } catch (IllegalAccessException err) {
+        } catch (IllegalAccessException err)
+        {
             System.out.println(err);
         }
     }

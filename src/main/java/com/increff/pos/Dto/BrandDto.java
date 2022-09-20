@@ -47,12 +47,7 @@ public class BrandDto {
         validateList(brandFormList);
         checkDuplicates(brandFormList);
 
-        List<BrandPojo> brandPojoList = new ArrayList<>();
-        for (BrandForm brandForm : brandFormList) {
-            brandPojoList.add(convertBrandFormtoBrandPojo(brandForm));
-        }
-
-        brandService.bulkAdd(brandPojoList);
+        brandService.bulkAdd(convertBrandFormtoBrandPojoList(brandFormList));
 
         return brandFormList.size();
 
@@ -65,7 +60,7 @@ public class BrandDto {
 
     public BrandData update(BrandData brandData) throws ApiException {
         validate(brandData, "brand or category cannot be null");
-        if (!CollectionUtils.isEmpty(productService.selectByBrandId(brandData.getId()))) {
+        if (productService.selectByBrandId(brandData.getId()).isEmpty()) {
             throw new ApiException("Cannot Update" + brandData.getBrand() + " - " + brandData.getCategory() + "as product for this exists");
         }
         brandService.update(convertBrandDatatoBrandPojo(brandData));

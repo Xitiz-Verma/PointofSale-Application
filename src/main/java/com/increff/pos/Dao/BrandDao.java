@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public class BrandDao extends AbstractDao {
 
-    private final static String SELECT_BY_BRAND_CATEGORY = "select p from BrandPojo p where" + "brand = : brand and category = : category";
+    private final static String SELECT_BY_BRAND_CATEGORY = "select p from BrandPojo p where brand = : brand and category = : category";
     private final static String SELECT_BY_BRAND = "select p from BrandPojo p where brand=:brand";
     private final static String SELECT_BY_CATEGORY = "select p form BrandPojo p were category=:categpry";
 

@@ -3,9 +3,9 @@ package com.increff.pos.Service;
 import com.increff.pos.Dao.ProductDao;
 import com.increff.pos.Exception.ApiException;
 import com.increff.pos.Pojo.ProductPojo;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import static java.util.Objects.isNull;
@@ -15,7 +15,7 @@ import static com.increff.pos.Dto.DtoHelper.ProductDtoHelper.validateMRP;
 import static com.increff.pos.Util.DataUtil.normalize;
 
 @Service
-@Transactional(rollbackOn = ApiException.class)
+@Transactional(rollbackFor = ApiException.class)
 public class ProductService {
 
     @Autowired
@@ -38,6 +38,7 @@ public class ProductService {
         }
     }
 
+    @Transactional(readOnly = true)
     public ProductPojo get(int id)throws ApiException{
         return getCheck(id);
     }
