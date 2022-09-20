@@ -83,7 +83,7 @@ public class ProductDto {
     {
         validate(productUpdateForm,"Parameters in thr Update form Cannot be Null");
         ProductPojo productPojo=productService.get(productUpdateForm.getId());
-        if(!isNull(InventoryService.selectByBarcode(productUpdateForm.getBarcode()))&productUpdateForm.getBarcode()!=productPojo.getBarcode())
+        if(!isNull(inventoryService.selectByBarcode(productUpdateForm.getBarcode()))&productUpdateForm.getBarcode()!=productPojo.getBarcode())
         {
             throw new ApiException("Cannot change Barcode ad Inventory exists for this");
         }

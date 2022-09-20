@@ -12,7 +12,7 @@ import java.util.List;
 public abstract class AbstractDao {
 
     @PersistenceContext
-    public EntityManager em;
+    protected EntityManager em;
 
     public <T> List<T> selectAll(Class<T> pojo) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -39,7 +39,8 @@ public abstract class AbstractDao {
         return getSingle(query);
     }
 
-    public <T> T getSingle(TypedQuery<T> query) {
+    public <T> T getSingle(TypedQuery<T> query)
+    {
         return query.getResultList().stream().findFirst().orElse(null);
     }
 
