@@ -1,6 +1,6 @@
 package com.increff.pos.Model;
 
-import jakarta.validation.constraints.NotNull;
+import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 

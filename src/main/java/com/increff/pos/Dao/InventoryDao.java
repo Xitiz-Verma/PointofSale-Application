@@ -3,7 +3,7 @@ package com.increff.pos.Dao;
 
 import com.increff.pos.Model.InventoryReport;
 import com.increff.pos.Pojo.InventoryPojo;
-import jakarta.persistence.TypedQuery;
+import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

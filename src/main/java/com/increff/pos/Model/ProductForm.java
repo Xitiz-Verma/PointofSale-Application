@@ -3,28 +3,28 @@ package com.increff.pos.Model;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+
+import javax.persistence.Column;
 
 @Getter
 @Setter
 public class ProductForm {
 
-    @NotBlank(message = "Id can't be Null")
+    @Column(nullable=false)
     private Integer id;
 
-    @NotBlank(message = "Name cannot be Null")
+    @Column(nullable=false)
     private String name;
 
-    @NotBlank(message = "Bar cannot be Null")
+    @Column(nullable=false)
     private String barcode;
 
-    @NotBlank(message = "Brand cannot be NULL")
+    @Column(nullable=false)
     private String brand;
 
-    @NotBlank(message = "Category cannot be NULL")
+    @Column(nullable=false)
     private String category;
 
-    @NotNull
+    @Column(nullable = false)
     Double mrp;
 }

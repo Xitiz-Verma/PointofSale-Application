@@ -1,6 +1,6 @@
 package com.increff.pos.Pojo;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,9 +14,10 @@ import static com.increff.pos.Pojo.TableConstants.PRODUCT_INITIAL_VALUE;
 @Table(name = "product", uniqueConstraints = {@UniqueConstraint(columnNames = {"barcode"})})
 public class ProductPojo extends AbstractPojo {
 
-    @TableGenerator(name = PRODUCT_GENERATOR, initialValue = PRODUCT_INITIAL_VALUE)
+//    @TableGenerator(name = PRODUCT_GENERATOR, initialValue = PRODUCT_INITIAL_VALUE)
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = PRODUCT_GENERATOR)
+//    @GeneratedValue(strategy = GenerationType.TABLE, generator = PRODUCT_GENERATOR)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(nullable = false)

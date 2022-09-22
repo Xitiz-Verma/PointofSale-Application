@@ -5,7 +5,7 @@ import com.increff.pos.Exception.ApiException;
 import com.increff.pos.Model.InventoryReport;
 import com.increff.pos.Model.InventoryUpdateForm;
 import com.increff.pos.Pojo.InventoryPojo;
-import jakarta.transaction.Transactional;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;

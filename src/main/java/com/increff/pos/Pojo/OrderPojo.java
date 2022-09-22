@@ -2,7 +2,7 @@ package com.increff.pos.Pojo;
 
 import lombok.Getter;
 import lombok.Setter;
-import jakarta.persistence.*;
+import javax.persistence.*;
 import java.time.ZonedDateTime;
 
 import static com.increff.pos.Pojo.TableConstants.ORDER_GENERATOR;
@@ -13,9 +13,10 @@ import static com.increff.pos.Pojo.TableConstants.ORDER_INTIAL_VALUE;
 @Entity
 public class OrderPojo extends AbstractPojo{
 
-    @TableGenerator(name=ORDER_GENERATOR, initialValue = ORDER_INTIAL_VALUE)
+//    @TableGenerator(name=ORDER_GENERATOR, initialValue = ORDER_INTIAL_VALUE)
     @Id
-    @GeneratedValue(strategy= GenerationType.TABLE, generator = ORDER_GENERATOR)
+//    @GeneratedValue(strategy= GenerationType.TABLE, generator = ORDER_GENERATOR)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(nullable = false)

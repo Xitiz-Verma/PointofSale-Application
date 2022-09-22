@@ -1,12 +1,8 @@
 package com.increff.pos.Dao;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.TypedQuery;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Root;
 
+import javax.persistence.*;
+import javax.persistence.criteria.*;
 import java.util.List;
 
 public abstract class AbstractDao {

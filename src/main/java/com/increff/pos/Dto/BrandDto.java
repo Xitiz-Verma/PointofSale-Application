@@ -8,8 +8,6 @@ import com.increff.pos.Service.BrandService;
 import com.increff.pos.Service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 

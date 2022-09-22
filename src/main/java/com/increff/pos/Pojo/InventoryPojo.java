@@ -1,6 +1,6 @@
 package com.increff.pos.Pojo;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,8 +14,9 @@ import static com.increff.pos.Pojo.TableConstants.INVENTORY_INITIAL_VALUE;
 public class InventoryPojo extends  AbstractPojo{
 
     @Id
-    @TableGenerator(name=INVENTORY_GENERATOR,initialValue = INVENTORY_INITIAL_VALUE)
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = INVENTORY_GENERATOR)
+//    @TableGenerator(name=INVENTORY_GENERATOR,initialValue = INVENTORY_INITIAL_VALUE)
+//    @GeneratedValue(strategy = GenerationType.TABLE, generator = INVENTORY_GENERATOR)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(nullable = false)

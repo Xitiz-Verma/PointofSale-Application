@@ -1,9 +1,9 @@
 package com.increff.pos.Dao;
 
 import com.increff.pos.Pojo.BrandPojo;
-import jakarta.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
