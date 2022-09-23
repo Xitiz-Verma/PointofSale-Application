@@ -51,7 +51,6 @@ public class ProductDto {
         {
             throw new ApiException("Empty Data");
         }
-        checkDuplicates(productFormList);
         validateProductList(productFormList);
         List<ProductPojo> productPojoList=new ArrayList<>();
         for(ProductForm productForm : productFormList)
@@ -88,7 +87,7 @@ public class ProductDto {
             throw new ApiException("Cannot change Barcode ad Inventory exists for this");
         }
 
-        Integer brandId=getBrandIdByBrandCategory(productUpdateForm.getBrand(),productUpdateForm.getCategory());
+       // Integer brandId=getBrandIdByBrandCategory(productUpdateForm.getBrand(),productUpdateForm.getCategory());
         ProductPojo productPojoConverted = convertProductFormtoProductPojo(productUpdateForm);
         productService.update(productPojoConverted);
         return productUpdateForm;
@@ -103,6 +102,7 @@ public class ProductDto {
     }
 
     public void validateProductList(List<ProductForm>productFormList)throws ApiException{
+        checkDuplicates(productFormList);
         List<String> errorList=new ArrayList<>();
         Integer row=1;
         for(ProductForm productForm:productFormList)
@@ -132,7 +132,7 @@ public class ProductDto {
             }
             row++;
         }
-        if(CollectionUtils.isEmpty(errorList))
+        if(CollectionUtils.isEmpty(errorList))//TODO is EMpty research !
         {
             throwError(errorList);
         }

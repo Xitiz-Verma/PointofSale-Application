@@ -2,8 +2,8 @@ package com.increff.pos.Service;
 
 import com.increff.pos.Dao.InventoryDao;
 import com.increff.pos.Exception.ApiException;
+import com.increff.pos.Model.InventoryForm;
 import com.increff.pos.Model.InventoryReport;
-import com.increff.pos.Model.InventoryUpdateForm;
 import com.increff.pos.Pojo.InventoryPojo;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,31 +62,32 @@ public class InventoryService {
         }
 
     }
-    public InventoryPojo get(Integer id)throws ApiException
+    public InventoryPojo get(String barcode)throws ApiException
     {
-        return getCheck(id);
+        return getCheck(barcode);
     }
     public List<InventoryPojo> getAll()throws ApiException
     {
         return inventoryDao.selectAll();
     }
 
-    public void update(InventoryUpdateForm inventoryUpdateForm)throws ApiException
+    public void update(InventoryForm inventoryForm)throws ApiException
     {
-        if(inventoryUpdateForm.getQuantity()<0)
+        if(inventoryForm.getQuantity()<0)
         {
             throw new ApiException("Quantity must be greater than 0");
         }
-        InventoryPojo inventoryPojo=getCheck(inventoryUpdateForm.getId());
-        inventoryPojo.setQuantity(inventoryUpdateForm.getQuantity());
+//        TODO get by barcode
+        InventoryPojo inventoryPojo=inventoryDao.selectByBarcode(inventoryForm.getBarcode());
+        inventoryPojo.setQuantity(inventoryForm.getQuantity());
         inventoryDao.update();
     }
-    public InventoryPojo getCheck(Integer id)throws ApiException
+    public InventoryPojo getCheck(String barcode)throws ApiException
     {
-        InventoryPojo inventoryPojo=inventoryDao.select(id);
+        InventoryPojo inventoryPojo=inventoryDao.selectByBarcode(barcode);
         if(isNull(inventoryPojo))
         {
-            throw new ApiException("Inventory with given id does not exist, id :"+id);
+            throw new ApiException("Inventory with given barcode does not exist, barcode :"+barcode);
         }
         return inventoryPojo;
     }

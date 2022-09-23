@@ -27,7 +27,6 @@ public class BrandService {
     @Transactional(readOnly = true)
     public List<BrandPojo> getAll() {
         return brandDao.selectAll();
-
     }
 
     public void add(BrandPojo brandPojo) throws ApiException {
@@ -83,6 +82,14 @@ public class BrandService {
 
     public BrandPojo selectByBrandCategory(String brand, String category) {
         return brandDao.selectByBrandCategory(brand, category);
+    }
+
+    public BrandPojo selectCheckByBrandCategory(String brand, String category) throws ApiException {
+        BrandPojo brandPojo = brandDao.selectByBrandCategory(brand,category);
+        if (isNull(brandPojo)) {
+            throw new ApiException("Brand with given brand-category comibnation does not exist");
+        }
+        return brandPojo;
     }
 
     public BrandPojo selectByBrand(String brand) {

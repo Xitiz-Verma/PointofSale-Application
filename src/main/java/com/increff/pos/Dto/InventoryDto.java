@@ -4,7 +4,6 @@ import com.increff.pos.Exception.ApiException;
 import com.increff.pos.Model.InventoryData;
 import com.increff.pos.Model.InventoryForm;
 import com.increff.pos.Model.InventoryReport;
-import com.increff.pos.Model.InventoryUpdateForm;
 import com.increff.pos.Pojo.InventoryPojo;
 import com.increff.pos.Pojo.ProductPojo;
 import com.increff.pos.Service.InventoryService;
@@ -34,9 +33,9 @@ public class InventoryDto {
     @Autowired
     private ProductService productService;
 
-    public InventoryData get(Integer id)throws ApiException
+    public InventoryData get(String barcode)throws ApiException
     {
-        return convertInventoryPojotoInventoryData(inventoryService.get(id));
+        return convertInventoryPojotoInventoryData(inventoryService.selectByBarcode(barcode));
     }
     public List<InventoryData> getAll()throws ApiException
     {
@@ -74,7 +73,7 @@ public class InventoryDto {
         return inventoryPojoList.size();
     }
 
-    public InventoryUpdateForm update(InventoryUpdateForm inventoryUpdateForm)throws ApiException
+    public InventoryForm update(InventoryForm inventoryUpdateForm)throws ApiException
     {
         validate(inventoryUpdateForm,"Quantity cant be Null");
         inventoryService.update(inventoryUpdateForm);

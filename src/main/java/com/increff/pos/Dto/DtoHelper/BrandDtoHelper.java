@@ -23,7 +23,7 @@ public class BrandDtoHelper {
         BrandData brandData = new BrandData();
         brandData.setId(brandPojo.getId());
         brandData.setBrand(brandPojo.getBrand());
-        brandData.setCategory(brandData.getCategory());
+        brandData.setCategory(brandPojo.getCategory());
         return brandData;
 
     }

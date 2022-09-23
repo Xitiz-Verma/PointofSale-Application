@@ -11,13 +11,12 @@ import static com.increff.pos.Pojo.TableConstants.PRODUCT_INITIAL_VALUE;
 @Getter
 @Setter
 @Entity
-@Table(name = "product", uniqueConstraints = {@UniqueConstraint(columnNames = {"barcode"})})
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"barcode"})},name="pos_product_pojo")
 public class ProductPojo extends AbstractPojo {
 
-//    @TableGenerator(name = PRODUCT_GENERATOR, initialValue = PRODUCT_INITIAL_VALUE)
     @Id
-//    @GeneratedValue(strategy = GenerationType.TABLE, generator = PRODUCT_GENERATOR)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @TableGenerator(name = PRODUCT_GENERATOR, initialValue = PRODUCT_INITIAL_VALUE)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = PRODUCT_GENERATOR)
     private Integer id;
 
     @Column(nullable = false)

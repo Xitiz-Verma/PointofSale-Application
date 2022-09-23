@@ -13,10 +13,9 @@ import static com.increff.pos.Pojo.TableConstants.ORDER_INTIAL_VALUE;
 @Entity
 public class OrderPojo extends AbstractPojo{
 
-//    @TableGenerator(name=ORDER_GENERATOR, initialValue = ORDER_INTIAL_VALUE)
+    @TableGenerator(name=ORDER_GENERATOR, initialValue = ORDER_INTIAL_VALUE)
     @Id
-//    @GeneratedValue(strategy= GenerationType.TABLE, generator = ORDER_GENERATOR)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy= GenerationType.TABLE, generator = ORDER_GENERATOR)
     private Integer id;
 
     @Column(nullable = false)

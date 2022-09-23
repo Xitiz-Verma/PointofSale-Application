@@ -43,7 +43,7 @@ public class ProductController {
 
     @ApiOperation(value=" Get a product by Id")
     @RequestMapping(path="/{id}",method= RequestMethod.GET)
-    public ProductData getProduct(@PathVariable int id)throws ApiException
+    public ProductData getProduct(@PathVariable Integer id)throws ApiException
     {
         return productDto.get(id);
     }
