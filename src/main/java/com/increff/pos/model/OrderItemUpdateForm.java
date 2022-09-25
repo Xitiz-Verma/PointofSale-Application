@@ -1,0 +1,23 @@
+package com.increff.pos.model;
+
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
+@Getter
+@Setter
+public class OrderItemUpdateForm {
+
+    @NotNull(message="Id cant be Null")
+    private Integer id;
+
+    @Min(value = 1,message = "Quantity must be greater than 1")
+    @NotNull(message = "Quantity cannot be empty")
+    private Integer quantity;
+
+    @Min(value=0,message = "Selling Price must be greater than 0")
+    private Double sellingPrice;
+
+}
