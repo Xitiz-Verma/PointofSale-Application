@@ -18,11 +18,13 @@ public class OrderItemDataList {
     private Double total;
     private Integer orderId;
 
+    //DEFAULT CONSTRUCTOR
     public OrderItemDataList()
     {
 
     }
 
+    //PARAM CONSTRUCTOR
     public OrderItemDataList(List<OrderItemData> orderItemDataList2, ZonedDateTime time, Double total, Integer orderId)
     {
         this.orderItemDataList = new ArrayList<OrderItemData>();

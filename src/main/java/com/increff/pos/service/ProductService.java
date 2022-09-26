@@ -52,12 +52,11 @@ public class ProductService {
         normalize(productPojo);
         validateBarcode(productPojo.getBarcode());
         validateMRP(productPojo.getMrp());
-
-        if(productDao.selectByBarcodeNotEqualId(productPojo.getBarcode(),productPojo.getId())!=null)
-        {
-            throw new ApiException("Bacode " + productPojo.getBarcode() + "already exists");
-        }
-
+        ProductPojo productPojo1 = productDao.selectByBarcode(productPojo.getBarcode());
+        productPojo1.setBrandCategoryId(productPojo.getBrandCategoryId());
+        productPojo1.setName(productPojo.getName());
+        productPojo1.setMrp(productPojo.getMrp());
+//        TODO update
     }
 
     public List<ProductPojo> selectByBrandId(Integer brandId) {
@@ -81,7 +80,7 @@ public class ProductService {
     {
         if(!isNull(productDao.selectByBarcode(barcode)))
         {
-            throw new ApiException("barcode" + barcode + "does not exist");
+            throw new ApiException("Product exists for this barcode : " + barcode);
         }
 
     }

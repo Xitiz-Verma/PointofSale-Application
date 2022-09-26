@@ -1,9 +1,7 @@
 package com.increff.pos.dto;
 
 import com.increff.pos.exception.ApiException;
-import com.increff.pos.model.OrderData;
-import com.increff.pos.model.OrderItemData;
-import com.increff.pos.model.OrderItemDataList;
+import com.increff.pos.model.*;
 import com.increff.pos.pojo.OrderItemPojo;
 import com.increff.pos.pojo.OrderPojo;
 import com.increff.pos.service.OrderItemService;
@@ -15,6 +13,7 @@ import org.apache.fop.apps.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.xml.transform.*;
 import javax.xml.transform.sax.SAXResult;
@@ -60,6 +59,11 @@ public class OrderDto {
             orderDataList.add(convertOrderPojotoOrderData(orderPojo));
         }
         return orderDataList;
+    }
+
+    public ZonedDateTime add()throws ApiException
+    {
+        return orderService.add();
     }
 
     public Integer updateOrderStatusPlaced(Integer id)throws ApiException
@@ -143,9 +147,20 @@ public class OrderDto {
 
     }
 
+//    @Transactional(rollbackFor = ApiException.class)
+//    public List<SalesReport> getSalesReport(SalesReportForm salesReportForm)throws ApiException
+//    {
+//        ZonedDateTime from = salesReportForm.getFrom();
+//        ZonedDateTime to =salesReportForm.getTo();
+//
+//        if(salesReportForm.getBrand()!="" & salesReportForm.getCategory()!="" & brandService.selectByBrandCategory(salesReportForm.getBrand(), salesReportForm.getCategory())==null)
+//        {
+//            throw new ApiException("The Given Brand Category Combination does not exist");
+//
+//        }
+//
+//    }
 
-    public ZonedDateTime add()throws ApiException
-    {
-        return orderService.add();
-    }
+
+
 }

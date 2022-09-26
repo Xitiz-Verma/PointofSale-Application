@@ -1,7 +1,9 @@
 /home/xitiz/Documents/PointOfSale/src/main/java/com/increff/pos/util/ErrorUtil.java
 /home/xitiz/Documents/PointOfSale/src/main/java/com/increff/pos/model/OrderItemForm.java
+/home/xitiz/Documents/PointOfSale/src/main/java/com/increff/pos/model/SalesReportForm.java
 /home/xitiz/Documents/PointOfSale/src/main/java/com/increff/pos/pojo/TableConstants.java
 /home/xitiz/Documents/PointOfSale/src/main/java/com/increff/pos/controller/ProductController.java
+/home/xitiz/Documents/PointOfSale/src/main/java/com/increff/pos/model/SalesReport.java
 /home/xitiz/Documents/PointOfSale/src/main/java/com/increff/pos/controller/OrderController.java
 /home/xitiz/Documents/PointOfSale/src/main/java/com/increff/pos/controller/AdviceController.java
 /home/xitiz/Documents/PointOfSale/src/main/java/com/increff/pos/util/HelperUtil.java

@@ -4,6 +4,7 @@ import com.increff.pos.exception.ApiException;
 import com.increff.pos.model.ProductData;
 import com.increff.pos.model.ProductForm;
 import com.increff.pos.model.ProductUpdateForm;
+import com.increff.pos.pojo.BrandPojo;
 import com.increff.pos.pojo.ProductPojo;
 
 import java.util.ArrayList;
@@ -16,37 +17,34 @@ import java.util.regex.Pattern;
 public class ProductDtoHelper {
 
 
-    public static ProductPojo convertProductFormtoProductPojo(ProductForm productForm)
+    public static ProductPojo convertProductFormtoProductPojo(ProductForm productForm, Integer brandCategoryId)
     {
         ProductPojo productPojo=new ProductPojo();
         productPojo.setName(productForm.getName());
-        productPojo.setBrand(productForm.getBrand());
-        productPojo.setCategory(productForm.getCategory());
+        productPojo.setBrandCategoryId(brandCategoryId);
         productPojo.setBarcode(productForm.getBarcode());
         productPojo.setMrp(productForm.getMrp());
         return productPojo;
 
     }
 
-    public static ProductPojo convertProductFormtoProductPojo(ProductUpdateForm productUpdateForm)
+    public static ProductPojo convertProductFormtoProductPojo(ProductUpdateForm productUpdateForm, Integer brandCategoryId)
     {
         ProductPojo productPojo=new ProductPojo();
-        productPojo.setId(productUpdateForm.getId());
         productPojo.setName(productUpdateForm.getName());
-        productPojo.setBrand(productUpdateForm.getBrand());
-        productPojo.setCategory(productUpdateForm.getCategory());
+        productPojo.setBrandCategoryId(brandCategoryId);
         productPojo.setBarcode(productUpdateForm.getBarcode());
         productPojo.setMrp(productUpdateForm.getMrp());
         return productPojo;
     }
 
-    public static ProductData convertProductPojotoProductData(ProductPojo productPojo)
+    public static ProductData convertProductPojotoProductData(ProductPojo productPojo, BrandPojo brandPojo)
     {
         ProductData productData=new ProductData();
         productData.setId(productPojo.getId());
-        productData.setBrand(productPojo.getBrand());
-        productData.setCategory(productPojo.getCategory());
-        productData.setBrandPojoId(productPojo.getBrandId());
+        productData.setBrand(brandPojo.getBrand());
+        productData.setCategory(brandPojo.getCategory());
+        productData.setBrandPojoId(productPojo.getBrandCategoryId());
         productData.setBarcode(productPojo.getBarcode());
         productData.setMrp(productPojo.getMrp());
         productData.setName(productPojo.getName());

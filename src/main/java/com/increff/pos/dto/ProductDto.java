@@ -37,8 +37,8 @@ public class ProductDto {
         validate(productForm, "Parameters in the Insert Form cannot be Null");
 
         Integer brandId = getBrandIdByBrandCategory(productForm.getBrand(), productForm.getCategory());
-        ProductPojo productPojo=convertProductFormtoProductPojo(productForm);
-        productPojo.setBrandId(brandId);
+        ProductPojo productPojo=convertProductFormtoProductPojo(productForm, brandId);
+        productPojo.setBrandCategoryId(brandId);
 
         productService.add(productPojo);
         return productForm;
@@ -56,8 +56,8 @@ public class ProductDto {
         for(ProductForm productForm : productFormList)
         {
             Integer brandId=getBrandIdByBrandCategory(productForm.getBrand(), productForm.getCategory());
-            ProductPojo productPojo=convertProductFormtoProductPojo(productForm);
-            productPojo.setBrandId(brandId);
+            ProductPojo productPojo=convertProductFormtoProductPojo(productForm, brandId);
+            productPojo.setBrandCategoryId(brandId);
             productPojoList.add(productPojo);
         }
 
@@ -66,14 +66,17 @@ public class ProductDto {
     }
 
     public ProductData get(Integer id)throws ApiException{
-        return convertProductPojotoProductData(productService.get(id));
+        ProductPojo productPojo = productService.get(id);
+        BrandPojo brandPojo = brandService.get(productPojo.getBrandCategoryId());
+        return convertProductPojotoProductData(productPojo, brandPojo);
     }
     public List<ProductData> getAll()throws ApiException{
         List<ProductPojo> productPojoList= productService.getAll();
         List<ProductData> productDataList=new ArrayList<>();
         for(ProductPojo productPojo:productPojoList)
         {
-            productDataList.add(convertProductPojotoProductData(productPojo));
+            BrandPojo brandPojo = brandService.get(productPojo.getBrandCategoryId());
+            productDataList.add(convertProductPojotoProductData(productPojo, brandPojo));
         }
         return productDataList;
     }
@@ -81,14 +84,11 @@ public class ProductDto {
     public ProductUpdateForm update(ProductUpdateForm productUpdateForm)throws ApiException
     {
         validate(productUpdateForm,"Parameters in thr Update form Cannot be Null");
-        ProductPojo productPojo=productService.get(productUpdateForm.getId());
-        if(!isNull(inventoryService.selectByBarcode(productUpdateForm.getBarcode()))&productUpdateForm.getBarcode()!=productPojo.getBarcode())
-        {
-            throw new ApiException("Cannot change Barcode ad Inventory exists for this");
-        }
+        ProductPojo productPojo=productService.selectByBarcode(productUpdateForm.getBarcode());
+        BrandPojo brandPojo = brandService.selectCheckByBrandCategory(productUpdateForm.getBrand(), productUpdateForm.getCategory());
 
        // Integer brandId=getBrandIdByBrandCategory(productUpdateForm.getBrand(),productUpdateForm.getCategory());
-        ProductPojo productPojoConverted = convertProductFormtoProductPojo(productUpdateForm);
+        ProductPojo productPojoConverted = convertProductFormtoProductPojo(productUpdateForm, brandPojo.getId());
         productService.update(productPojoConverted);
         return productUpdateForm;
     }

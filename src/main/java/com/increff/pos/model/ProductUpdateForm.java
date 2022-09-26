@@ -10,8 +10,6 @@ import javax.validation.constraints.NotNull;
 @Setter
 public class ProductUpdateForm {
 
-    private Integer id;
-
     @NotNull(message="barcode cannot be blank")
     private String barcode;
 

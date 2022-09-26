@@ -11,9 +11,6 @@ import javax.persistence.Column;
 public class ProductForm {
 
     @Column(nullable=false)
-    private Integer id;
-
-    @Column(nullable=false)
     private String name;
 
     @Column(nullable=false)

@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.Validation;
+import javax.validation.ValidatorFactory;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +28,8 @@ import static java.util.Objects.isNull;
 
 @Service
 public class OrderItemDto {
+
+
 
     @Autowired
     private OrderItemService orderItemService;
@@ -174,9 +178,8 @@ public class OrderItemDto {
         InventoryPojo inventoryPojo=inventoryService.selectByBarcode(barcode);
         if(isNull(inventoryPojo))
         {
-            throw new ApiException("Product with this Barcode does not exist int he Inventory, id : "+barcode);
+            throw new ApiException("Product with this Barcode does not exist in the Inventory, id : "+barcode);
         }
-        //return inventoryService.get(inventoryPojo.getBarcode()).getQuantity();
         return inventoryPojo.getQuantity();
     }
 

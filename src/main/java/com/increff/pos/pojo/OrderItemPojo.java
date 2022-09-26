@@ -10,7 +10,7 @@ import static com.increff.pos.pojo.TableConstants.ORDER_ITEM_INITIAL_VALUE;
 @Getter
 @Setter
 @Entity
-@Table(uniqueConstraints = {@UniqueConstraint(columnNames={"orderId","productId"})},name="pos_order_item_pojo")
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames={"orderId","barcode"})},name="pos_order_item_pojo")
 public class OrderItemPojo extends AbstractPojo{
 
     @Id

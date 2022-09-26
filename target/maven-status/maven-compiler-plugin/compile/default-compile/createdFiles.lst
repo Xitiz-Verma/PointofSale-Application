@@ -10,6 +10,7 @@ com/increff/pos/dto/dtoHelper/InventoryDtoHelper.class
 com/increff/pos/model/OrderItemDataList.class
 com/increff/pos/util/ErrorUtil.class
 com/increff/pos/dto/OrderDto.class
+com/increff/pos/model/SalesReport.class
 com/increff/pos/service/OrderService.class
 com/increff/pos/controller/InventoryController.class
 com/increff/pos/model/OrderItemForm.class
@@ -29,6 +30,7 @@ com/increff/pos/dao/InventoryDao.class
 com/increff/pos/spring/ControllerConfig.class
 com/increff/pos/service/InventoryService.class
 com/increff/pos/model/InventoryReport.class
+com/increff/pos/model/SalesReportForm.class
 com/increff/pos/controller/AdviceController.class
 com/increff/pos/controller/ProductController.class
 com/increff/pos/model/ProductData.class

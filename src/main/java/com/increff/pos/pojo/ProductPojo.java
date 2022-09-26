@@ -20,16 +20,10 @@ public class ProductPojo extends AbstractPojo {
     private Integer id;
 
     @Column(nullable = false)
-    private Integer brandId;
-
-    @Column(nullable = false)
     private String barcode;
 
     @Column(nullable = false)
-    private String brand;
-
-    @Column(nullable = false)
-    private String category;
+    private Integer brandCategoryId;
 
     @Column(nullable = false)
     private String name;

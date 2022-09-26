@@ -10,7 +10,6 @@ import java.util.List;
 public class ProductDao extends AbstractDao{
 
     private final static String SELECT_BY_BARCODE = "select p from ProductPojo p where barcode=:barcode";
-    private final static String SELECT_BY_BARCODE_AND_NOT_EQUAL_ID = "select p form ProductPojo p where barcode=:barcode nd id!=:id";
     private final static String SELECT_BY_BRAND_ID = "select p form ProductPojo p where brandID=:brandId";
     private final static String SELECT_BY_BRAND = "select p from ProductPojo p where brand=:brand";
     private final static String SELECT_BY_CATEGORY = "select p from ProductPojo where category=:category";
@@ -45,11 +44,4 @@ public class ProductDao extends AbstractDao{
         return selectAll(ProductPojo.class);
     }
 
-    public ProductPojo selectByBarcodeNotEqualId(String barcode,int id)
-    {
-        TypedQuery<ProductPojo> query = em().createQuery(SELECT_BY_BARCODE_AND_NOT_EQUAL_ID,ProductPojo.class);
-        query.setParameter("barcode",barcode);
-        query.setParameter("id",id);
-        return getSingle(query);
-    }
 }

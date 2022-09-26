@@ -7,7 +7,12 @@ import com.increff.pos.pojo.OrderItemPojo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.ValidatorFactory;
 import java.util.List;
+import java.util.Set;
 
 import static java.util.Objects.isNull;
 
@@ -19,7 +24,7 @@ public class OrderItemService {
 
     public void add(OrderItemPojo orderItemPojo)throws ApiException
     {
-        if(orderItemPojo.getQuantiy()<=0)
+      if(orderItemPojo.getQuantiy()<=0)
         {
             throw new ApiException("Quantity must be greater than 0");
         }
