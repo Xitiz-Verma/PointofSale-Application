@@ -64,10 +64,10 @@ public class BrandService {
         return brandPojo;
     }
 
-    public void update(BrandPojo brandPojo) throws ApiException
+    public void update(BrandPojo brandPojo,Integer id) throws ApiException
     {
         checkUnique(brandPojo);
-        BrandPojo exists = getCheck(brandPojo.getId());
+        BrandPojo exists = getCheck(id);
         exists.setBrand(brandPojo.getBrand());
         exists.setCategory(brandPojo.getCategory());
         brandDao.update();

@@ -40,7 +40,7 @@ public class OrderController {
 
     @ApiOperation(value="Adds an Order Details")
     @RequestMapping(path="", method = RequestMethod.POST)
-    public ZonedDateTime insertOrder()throws ApiException
+    public OrderData insertOrder()throws ApiException
     {
         return orderDto.add();
     }

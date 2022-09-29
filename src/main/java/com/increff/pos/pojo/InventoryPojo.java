@@ -19,9 +19,6 @@ public class InventoryPojo extends  AbstractPojo{
     private Integer id;
 
     @Column(nullable = false)
-    private Integer productId;
-
-    @Column(nullable = false)
     private String barcode;
 
     @Column(nullable = false)

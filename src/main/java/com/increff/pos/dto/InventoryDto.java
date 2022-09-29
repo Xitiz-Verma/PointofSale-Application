@@ -53,7 +53,8 @@ public class InventoryDto {
         validateInventoryForm(inventoryForm);
         inventoryForm=normalize(inventoryForm);
         InventoryPojo inventoryPojo = convertInventoryFormtoInventoryPojo(inventoryForm);
-        inventoryService.add(addProductId(inventoryPojo));
+        addProductId(inventoryPojo);
+        inventoryService.add(inventoryPojo);
         return convertInventoryFormtoInventoryDataUI(inventoryForm);
     }
 
@@ -68,7 +69,8 @@ public class InventoryDto {
         for(InventoryForm inventoryForm : inventoryFormList)
         {
             InventoryPojo inventoryPojo=convertInventoryFormtoInventoryPojo(inventoryForm);
-            inventoryPojoList.add(addProductId(inventoryPojo));
+            addProductId(inventoryPojo);
+            inventoryPojoList.add(inventoryPojo);
         }
         inventoryService.bulkAdd(inventoryPojoList);
         return inventoryPojoList.size();
@@ -113,16 +115,9 @@ public class InventoryDto {
             throwError(errorList);
     }
 
-    private InventoryPojo addProductId(InventoryPojo inventoryPojo)throws ApiException
+    private void addProductId(InventoryPojo inventoryPojo)throws ApiException
     {
-        ProductPojo productPojo = new ProductPojo();
-        if(isNull(productPojo))
-        {
-            throw new ApiException("Product with this Barcode does not exist");
-        }
-        int productId = productPojo.getId();
-        inventoryPojo.setProductId(productId);
-        return inventoryPojo;
+        productService.selectByBarcode(inventoryPojo.getBarcode());
     }
 
     public void validateInventoryForm(InventoryForm inventoryForm)throws ApiException

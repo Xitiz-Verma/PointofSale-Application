@@ -69,9 +69,9 @@ public class OrderDto {
         return orderDataList;
     }
 
-    public ZonedDateTime add()throws ApiException
+    public OrderData add()throws ApiException
     {
-        return orderService.add();
+        return convertOrderPojotoOrderData(orderService.add());
     }
 
     public Integer updateOrderStatusPlaced(Integer id)throws ApiException

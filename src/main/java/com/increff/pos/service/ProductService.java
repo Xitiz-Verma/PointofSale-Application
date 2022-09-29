@@ -50,6 +50,10 @@ public class ProductService {
         validateBarcode(productPojo.getBarcode());
         validateMRP(productPojo.getMrp());
         ProductPojo productPojo1 = productDao.selectByBarcode(productPojo.getBarcode());
+        if(isNull(productPojo1))
+        {
+            throw new ApiException("Product with the given Barcode does not exist , barcode : "+productPojo.getBarcode());
+        }
         productPojo1.setBrandCategoryId(productPojo.getBrandCategoryId());
         productPojo1.setName(productPojo.getName());
         productPojo1.setMrp(productPojo.getMrp());

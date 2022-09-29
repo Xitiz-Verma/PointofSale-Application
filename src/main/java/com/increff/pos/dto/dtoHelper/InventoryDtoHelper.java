@@ -14,7 +14,6 @@ public class InventoryDtoHelper {
         inventoryData.setId(inventoryPojo.getId());
         inventoryData.setBarcode(inventoryPojo.getBarcode());
         inventoryData.setQuantity(inventoryPojo.getQuantity());
-        inventoryData.setProductId(inventoryPojo.getProductId());
         return inventoryData;
     }
 

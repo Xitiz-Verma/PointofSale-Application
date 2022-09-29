@@ -4,6 +4,7 @@ import com.google.protobuf.Api;
 import com.increff.pos.dao.OrderItemDao;
 import com.increff.pos.exception.ApiException;
 import com.increff.pos.pojo.OrderItemPojo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +21,7 @@ import static java.util.Objects.isNull;
 @Service
 public class OrderItemService {
 
+    @Autowired
     private OrderItemDao orderItemDao;
 
     public void add(OrderItemPojo orderItemPojo)throws ApiException

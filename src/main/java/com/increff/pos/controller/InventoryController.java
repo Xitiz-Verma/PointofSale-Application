@@ -50,7 +50,7 @@ public class InventoryController {
 
     @ApiOperation(value="Updates an Inventory")
     @RequestMapping(path="/{id}", method = RequestMethod.PUT)
-    public InventoryDataUI updateInventory(@RequestBody InventoryForm  inventoryForm,@PathVariable Integer id)throws ApiException
+    public InventoryDataUI updateInventory(@RequestBody InventoryForm  inventoryForm)throws ApiException
     {
         return inventoryDto.update(inventoryForm);
     }

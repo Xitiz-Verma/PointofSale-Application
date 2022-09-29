@@ -22,13 +22,13 @@ public class OrderService {
     @Autowired
     private OrderDao orderDao;
 
-    public ZonedDateTime add() throws ApiException {
+    public OrderPojo add() throws ApiException {
 
         OrderPojo orderPojo = new OrderPojo();
         ZonedDateTime date = ZonedDateTime.now(ZoneId.systemDefault());
         orderPojo.setTime(date);
         orderDao.add(orderPojo);
-        return date;
+        return orderPojo;
 
     }
 

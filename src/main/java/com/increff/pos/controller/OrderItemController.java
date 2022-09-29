@@ -36,7 +36,7 @@ public class OrderItemController {
 
     @ApiOperation(value="Gives all Order Item Data for an Order")
     @RequestMapping(path="/orders/{orderId}/order-items",method=RequestMethod.GET)
-    public List<OrderItemData> getOrderItemsForOrderId(@RequestBody Integer orderId)throws ApiException
+    public List<OrderItemData> getOrderItemsForOrderId(@PathVariable Integer orderId)throws ApiException
     {
         return orderItemDto.getOrderItemForOrder(orderId);
     }

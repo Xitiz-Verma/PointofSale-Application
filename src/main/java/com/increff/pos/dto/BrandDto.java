@@ -69,7 +69,7 @@ public class BrandDto {
         }
         validateBrandForm(brandForm);
         brandForm=normalize(brandForm);
-        brandService.update(convertBrandFormtoBrandPojo(brandForm));
+        brandService.update(convertBrandFormtoBrandPojo(brandForm),id);
         return convertBrandFormtoBrandDataUI(brandForm);
     }
 

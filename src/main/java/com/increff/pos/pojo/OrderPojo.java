@@ -11,6 +11,8 @@ import static com.increff.pos.pojo.TableConstants.ORDER_INTIAL_VALUE;
 @Getter
 @Setter
 @Entity
+
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"id"})},name="pos_order_pojo")
 public class OrderPojo extends AbstractPojo{
 
     @TableGenerator(name=ORDER_GENERATOR, initialValue = ORDER_INTIAL_VALUE)

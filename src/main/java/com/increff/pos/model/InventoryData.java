@@ -10,8 +10,6 @@ public class InventoryData {
     
     private Integer id;
 
-    private Integer productId;
-
     private String barcode;
 
     private Integer quantity;

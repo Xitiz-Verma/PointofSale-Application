@@ -9,7 +9,7 @@ import lombok.Setter;
 public class ProductData {
 
     private Integer id;
-    private Integer BrandPojoId;
+    private Integer BrandCategoryId;
     private String barcode;
 
     private String brand;
