@@ -3,11 +3,14 @@ package com.increff.pos.dto;
 import com.increff.pos.exception.ApiException;
 import com.increff.pos.model.BrandData;
 import com.increff.pos.model.BrandForm;
+import com.increff.pos.model.DataUI.BrandDataUI;
 import com.increff.pos.pojo.BrandPojo;
 import com.increff.pos.service.BrandService;
 import com.increff.pos.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -33,12 +36,12 @@ public class BrandDto {
         return brandDataList;
     }
 
-    public BrandForm add(BrandForm brandForm) throws ApiException
+    public BrandDataUI add(BrandForm brandForm) throws ApiException
     {
         validateBrandForm(brandForm);
         brandForm=normalize(brandForm);
         brandService.add(convertBrandFormtoBrandPojo(brandForm));
-        return brandForm;
+        return convertBrandFormtoBrandDataUI(brandForm);
     }
 
     public Integer bulkAdd(List<BrandForm> brandFormList) throws ApiException {
@@ -58,16 +61,16 @@ public class BrandDto {
         return convertBrandPojoToBrandData(brandService.get(id));
     }
 
-    public BrandForm update(BrandForm brandForm,Integer id) throws ApiException
+    public BrandDataUI update(BrandForm brandForm,Integer id) throws ApiException
     {
-        if (productService.selectByBrandId(id).isEmpty())
+        if (CollectionUtils.isEmpty(productService.selectByBrandId(id))==false)
         {
-            throw new ApiException("Cannot Update" + brandForm.getBrand() + " - " + brandForm.getCategory() + "as product for this exists");
+            throw new ApiException("Cannot Update " + brandForm.getBrand() + " - " + brandForm.getCategory() + " as product for this exists");
         }
         validateBrandForm(brandForm);
         brandForm=normalize(brandForm);
         brandService.update(convertBrandFormtoBrandPojo(brandForm));
-        return brandForm;
+        return convertBrandFormtoBrandDataUI(brandForm);
     }
 
     public void validateBrandForm(BrandForm brandForm)throws ApiException

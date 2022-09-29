@@ -1,6 +1,7 @@
 package com.increff.pos.dto.dtoHelper;
 
 import com.increff.pos.exception.ApiException;
+import com.increff.pos.model.DataUI.ProductDataUI;
 import com.increff.pos.model.ProductData;
 import com.increff.pos.model.ProductForm;
 import com.increff.pos.pojo.BrandPojo;
@@ -93,6 +94,16 @@ public class ProductDtoHelper {
         }
     }
 
+    public static ProductDataUI convertProductFormtoProductDataUI(ProductForm productForm)
+    {
+        ProductDataUI productDataUI = new ProductDataUI();
+        productDataUI.setBarcode(productForm.getBarcode());
+        productDataUI.setBrand(productForm.getBrand());
+        productDataUI.setName(productForm.getName());
+        productDataUI.setCategory(productForm.getCategory());
+        productDataUI.setMrp(productForm.getMrp());
+        return productDataUI;
+    }
 
 
 }

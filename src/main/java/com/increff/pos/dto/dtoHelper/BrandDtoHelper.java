@@ -3,6 +3,7 @@ package com.increff.pos.dto.dtoHelper;
 import com.increff.pos.exception.ApiException;
 import com.increff.pos.model.BrandData;
 import com.increff.pos.model.BrandForm;
+import com.increff.pos.model.DataUI.BrandDataUI;
 import com.increff.pos.pojo.BrandPojo;
 import org.springframework.util.CollectionUtils;
 
@@ -85,5 +86,14 @@ public class BrandDtoHelper {
         if (!CollectionUtils.isEmpty(errorList)) {
             throwError(errorList);
         }
+    }
+
+    public static BrandDataUI convertBrandFormtoBrandDataUI(BrandForm brandForm)
+    {
+        BrandDataUI brandDataUI=new BrandDataUI();
+        brandDataUI.setBrand(brandForm.getBrand());
+        brandDataUI.setCategory(brandForm.getCategory());
+        return brandDataUI;
+
     }
 }

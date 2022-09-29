@@ -3,6 +3,7 @@ package com.increff.pos.controller;
 
 import com.increff.pos.dto.ProductDto;
 import com.increff.pos.exception.ApiException;
+import com.increff.pos.model.DataUI.ProductDataUI;
 import com.increff.pos.model.ProductData;
 import com.increff.pos.model.ProductForm;
 import io.swagger.annotations.Api;
@@ -23,7 +24,7 @@ public class ProductController {
 
     @ApiOperation(value = "Add a Product Details")
     @RequestMapping(path = "", method = RequestMethod.POST)
-    public ProductForm insertProduct(@RequestBody ProductForm productForm) throws ApiException {
+    public ProductDataUI insertProduct(@RequestBody ProductForm productForm) throws ApiException {
         return productDto.add(productForm);
     }
 
@@ -49,7 +50,7 @@ public class ProductController {
 
     @ApiOperation(value= " Update a Product ")
     @RequestMapping(path="" , method =RequestMethod.PUT)
-    public ProductForm updateProduct(@RequestBody ProductForm productForm)throws ApiException
+    public ProductDataUI updateProduct(@RequestBody ProductForm productForm)throws ApiException
     {
         return productDto.update(productForm);
     }

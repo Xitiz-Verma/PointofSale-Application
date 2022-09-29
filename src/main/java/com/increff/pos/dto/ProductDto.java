@@ -1,6 +1,7 @@
 package com.increff.pos.dto;
 
 import com.increff.pos.exception.ApiException;
+import com.increff.pos.model.DataUI.ProductDataUI;
 import com.increff.pos.model.ProductData;
 import com.increff.pos.model.ProductForm;
 import com.increff.pos.pojo.BrandPojo;
@@ -33,14 +34,14 @@ public class ProductDto {
     @Autowired
     private InventoryService inventoryService;
 
-    public ProductForm add(ProductForm productForm) throws ApiException {
+    public ProductDataUI add(ProductForm productForm) throws ApiException {
         validateProductForm(productForm);
         productForm = normalize(productForm);
         Integer brandId = getBrandIdByBrandCategory(productForm.getBrand(), productForm.getCategory());
         ProductPojo productPojo=convertProductFormtoProductPojo(productForm, brandId);
         productPojo.setBrandCategoryId(brandId);
         productService.add(productPojo);
-        return productForm;
+        return convertProductFormtoProductDataUI(productForm);
     }
 
     public Integer bulkAdd(List<ProductForm> productFormList)throws ApiException
@@ -79,7 +80,7 @@ public class ProductDto {
         return productDataList;
     }
 
-    public ProductForm update(ProductForm productForm)throws ApiException
+    public ProductDataUI update(ProductForm productForm)throws ApiException
     {
         validateProductForm(productForm);
         productForm=normalize(productForm);
@@ -89,7 +90,7 @@ public class ProductDto {
        // Integer brandId=getBrandIdByBrandCategory(productUpdateForm.getBrand(),productUpdateForm.getCategory());
         ProductPojo productPojoConverted = convertProductFormtoProductPojo(productForm, brandPojo.getId());
         productService.update(productPojoConverted);
-        return productForm;
+        return convertProductFormtoProductDataUI(productForm);
     }
 
     public Integer getBrandIdByBrandCategory(String brand, String category) throws ApiException {

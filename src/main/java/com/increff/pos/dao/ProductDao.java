@@ -10,10 +10,7 @@ import java.util.List;
 public class ProductDao extends AbstractDao{
 
     private final static String SELECT_BY_BARCODE = "select p from ProductPojo p where barcode=:barcode";
-    private final static String SELECT_BY_BRAND_ID = "select p form ProductPojo p where brandID=:brandId";
-    private final static String SELECT_BY_BRAND = "select p from ProductPojo p where brand=:brand";
-    private final static String SELECT_BY_CATEGORY = "select p from ProductPojo where category=:category";
-    private final static String SELECT_BY_BRAND_CATEGORY = "select p from ProductPojo where brand=:brand and category=:category";
+    private final static String SELECT_BY_BRAND_ID = "select p from ProductPojo p where brandCategoryId =:brandCategoryId";
 
     public void add(ProductPojo productPojo)
     {
@@ -27,10 +24,10 @@ public class ProductDao extends AbstractDao{
         query.setParameter("barcode",barcode);
         return getSingle(query);
     }
-    public List<ProductPojo> selectByBrandId(int brandId)
+    public List<ProductPojo> selectByBrandId(int brandCategoryId)
     {
         TypedQuery<ProductPojo> query=em().createQuery(SELECT_BY_BRAND_ID, ProductPojo.class);
-        query.setParameter("brandId",brandId);
+        query.setParameter("brandCategoryId",brandCategoryId);
         return query.getResultList();
     }
 

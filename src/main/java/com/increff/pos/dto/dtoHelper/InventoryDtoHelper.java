@@ -1,6 +1,7 @@
 package com.increff.pos.dto.dtoHelper;
 
 
+import com.increff.pos.model.DataUI.InventoryDataUI;
 import com.increff.pos.model.InventoryData;
 import com.increff.pos.model.InventoryForm;
 import com.increff.pos.pojo.InventoryPojo;
@@ -23,5 +24,13 @@ public class InventoryDtoHelper {
         inventoryPojo.setBarcode(inventoryForm.getBarcode());
         inventoryPojo.setQuantity(inventoryForm.getQuantity());
         return inventoryPojo;
+    }
+
+    public static InventoryDataUI convertInventoryFormtoInventoryDataUI(InventoryForm inventoryForm)
+    {
+        InventoryDataUI inventoryDataUI=new InventoryDataUI();
+        inventoryDataUI.setBarcode(inventoryForm.getBarcode());
+        inventoryDataUI.setQuantity(inventoryForm.getQuantity());
+        return inventoryDataUI;
     }
 }

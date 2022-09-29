@@ -2,6 +2,7 @@ package com.increff.pos.controller;
 
 import com.increff.pos.dto.InventoryDto;
 import com.increff.pos.exception.ApiException;
+import com.increff.pos.model.DataUI.InventoryDataUI;
 import com.increff.pos.model.InventoryData;
 import com.increff.pos.model.InventoryForm;
 import com.increff.pos.model.InventoryReport;
@@ -35,7 +36,7 @@ public class InventoryController {
 
     @ApiOperation(value="Adds Inventory Details")
     @RequestMapping(path="",method = RequestMethod.POST)
-    public InventoryForm insertInventory(@RequestBody InventoryForm inventoryForm)throws ApiException
+    public InventoryDataUI insertInventory(@RequestBody InventoryForm inventoryForm)throws ApiException
     {
         return inventoryDto.add(inventoryForm);
     }
@@ -49,7 +50,7 @@ public class InventoryController {
 
     @ApiOperation(value="Updates an Inventory")
     @RequestMapping(path="/{id}", method = RequestMethod.PUT)
-    public InventoryForm updateInventory(@RequestBody InventoryForm  inventoryForm,@PathVariable Integer id)throws ApiException
+    public InventoryDataUI updateInventory(@RequestBody InventoryForm  inventoryForm,@PathVariable Integer id)throws ApiException
     {
         return inventoryDto.update(inventoryForm);
     }

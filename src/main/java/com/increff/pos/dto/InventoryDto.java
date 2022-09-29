@@ -2,6 +2,7 @@ package com.increff.pos.dto;
 
 import com.increff.pos.exception.ApiException;
 import com.increff.pos.model.BrandForm;
+import com.increff.pos.model.DataUI.InventoryDataUI;
 import com.increff.pos.model.InventoryData;
 import com.increff.pos.model.InventoryForm;
 import com.increff.pos.model.InventoryReport;
@@ -18,8 +19,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static com.increff.pos.dto.dtoHelper.InventoryDtoHelper.convertInventoryFormtoInventoryPojo;
-import static com.increff.pos.dto.dtoHelper.InventoryDtoHelper.convertInventoryPojotoInventoryData;
+import static com.increff.pos.dto.dtoHelper.InventoryDtoHelper.*;
 import static com.increff.pos.util.DataUtil.checkNotNullBulkUtil;
 import static com.increff.pos.util.ErrorUtil.throwError;
 import static java.util.Objects.isNull;
@@ -48,13 +48,13 @@ public class InventoryDto {
         return inventoryDataList;
     }
 
-    public InventoryForm add(InventoryForm inventoryForm)throws ApiException
+    public InventoryDataUI add(InventoryForm inventoryForm)throws ApiException
     {
         validateInventoryForm(inventoryForm);
         inventoryForm=normalize(inventoryForm);
         InventoryPojo inventoryPojo = convertInventoryFormtoInventoryPojo(inventoryForm);
         inventoryService.add(addProductId(inventoryPojo));
-        return inventoryForm;
+        return convertInventoryFormtoInventoryDataUI(inventoryForm);
     }
 
     public Integer bulkAdd(List<InventoryForm> inventoryFormList)throws ApiException
@@ -74,17 +74,12 @@ public class InventoryDto {
         return inventoryPojoList.size();
     }
 
-    public InventoryForm update(InventoryForm inventoryForm)throws ApiException
+    public InventoryDataUI update(InventoryForm inventoryForm)throws ApiException
     {
         validateInventoryForm(inventoryForm);
         inventoryForm=normalize(inventoryForm);
         inventoryService.update(inventoryForm);
-        return inventoryForm;
-    }
-
-    public List<InventoryReport> getInventoryReport()
-    {
-        return inventoryService.getInventoryReport();
+        return convertInventoryFormtoInventoryDataUI(inventoryForm);
     }
 
     private void validateInventoryList(List<InventoryForm> inventoryFormList)throws ApiException
@@ -148,5 +143,9 @@ public class InventoryDto {
         return inventoryForm;
     }
 
+    public List<InventoryReport> getInventoryReport()
+    {
+        return inventoryService.getInventoryReport();
+    }
 
 }

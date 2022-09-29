@@ -5,6 +5,7 @@ import com.increff.pos.dto.BrandDto;
 import com.increff.pos.exception.ApiException;
 import com.increff.pos.model.BrandData;
 import com.increff.pos.model.BrandForm;
+import com.increff.pos.model.DataUI.BrandDataUI;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class BrandController {
 
     @ApiOperation(value = "Adds Brand Details")
     @RequestMapping(path = "", method = RequestMethod.POST)
-    public BrandForm insertBrand(@RequestBody BrandForm brandForm) throws ApiException {
+    public BrandDataUI insertBrand(@RequestBody BrandForm brandForm) throws ApiException {
         return brandDto.add(brandForm);
     }
 
@@ -52,14 +53,7 @@ public class BrandController {
 
     @ApiOperation(value = "Updates a Brand")
     @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
-    public BrandForm
-
-
-
-
-
-
-    updateBrand(@RequestBody BrandForm brandForm, @PathVariable Integer id) throws ApiException {
+    public BrandDataUI updateBrand(@RequestBody BrandForm brandForm, @PathVariable Integer id) throws ApiException {
         return brandDto.update(brandForm,id);
     }
 

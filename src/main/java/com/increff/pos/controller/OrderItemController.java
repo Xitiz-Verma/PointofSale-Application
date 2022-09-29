@@ -2,6 +2,7 @@ package com.increff.pos.controller;
 
 import com.increff.pos.dto.OrderItemDto;
 import com.increff.pos.exception.ApiException;
+import com.increff.pos.model.DataUI.OrderItemDataUI;
 import com.increff.pos.model.OrderItemData;
 import com.increff.pos.model.OrderItemForm;
 import com.increff.pos.model.OrderItemUpdateForm;
@@ -21,7 +22,7 @@ public class OrderItemController {
 
     @ApiOperation(value="Adds an Order Item")
     @RequestMapping(path="/orders/order-items", method = RequestMethod.POST)
-    public OrderItemForm insertOrderItem(@RequestBody OrderItemForm orderItemForm)throws ApiException
+    public OrderItemDataUI insertOrderItem(@RequestBody OrderItemForm orderItemForm)throws ApiException
     {
         return orderItemDto.add(orderItemForm);
     }

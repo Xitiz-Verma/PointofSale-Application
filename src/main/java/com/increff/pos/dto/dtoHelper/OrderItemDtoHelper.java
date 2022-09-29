@@ -1,5 +1,6 @@
 package com.increff.pos.dto.dtoHelper;
 
+import com.increff.pos.model.DataUI.OrderItemDataUI;
 import com.increff.pos.model.OrderItemData;
 import com.increff.pos.model.OrderItemForm;
 import com.increff.pos.model.OrderItemUpdateForm;
@@ -46,6 +47,16 @@ public class OrderItemDtoHelper {
         orderItemData.setSellingPrice(orderItemPojo.getSellingPrice());
         orderItemData.setBarcode(orderItemPojo.getBarcode());
         return orderItemData;
+    }
+
+    public static OrderItemDataUI convertOrderItemFormtoOrderItemDataUI(OrderItemForm orderItemForm)
+    {
+        OrderItemDataUI orderItemDataUI = new OrderItemDataUI();
+        orderItemDataUI.setBarcode(orderItemForm.getBarcode());
+        orderItemDataUI.setOrderId(orderItemForm.getOrderId());
+        orderItemDataUI.setQuantity(orderItemForm.getQuantity());
+        orderItemDataUI.setSellingPrice(orderItemForm.getSellingPrice());
+        return orderItemDataUI;
     }
 
 

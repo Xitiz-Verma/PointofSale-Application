@@ -1,6 +1,7 @@
 package com.increff.pos.dto;
 
 import com.increff.pos.exception.ApiException;
+import com.increff.pos.model.DataUI.OrderItemDataUI;
 import com.increff.pos.model.InventoryForm;
 import com.increff.pos.model.OrderItemData;
 import com.increff.pos.model.OrderItemForm;
@@ -19,8 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.increff.pos.dto.dtoHelper.OrderItemDtoHelper.convertOrderItemFormToOrderItemPojo;
-import static com.increff.pos.dto.dtoHelper.OrderItemDtoHelper.convertOrderItemPojoToOrderItemData;
+import static com.increff.pos.dto.dtoHelper.OrderItemDtoHelper.*;
 import static java.util.Objects.isNull;
 
 @Service
@@ -37,7 +37,7 @@ public class OrderItemDto {
     @Autowired
     private InventoryService inventoryService;
 
-    public OrderItemForm add(OrderItemForm orderItemForm)throws ApiException
+    public OrderItemDataUI add(OrderItemForm orderItemForm)throws ApiException
     {
         validateOrderItemForm(orderItemForm);
         Integer availableQty = getAvailQty(orderItemForm.getBarcode());
@@ -53,7 +53,7 @@ public class OrderItemDto {
         inventoryService.update(inventoryForm);
 
         orderItemService.add(convertOrderItemFormToOrderItemPojo(orderItemForm));
-        return orderItemForm;
+        return convertOrderItemFormtoOrderItemDataUI(orderItemForm);
     }
 
     public List<OrderItemData> getAll()throws ApiException
