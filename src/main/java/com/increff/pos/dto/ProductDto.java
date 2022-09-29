@@ -3,7 +3,6 @@ package com.increff.pos.dto;
 import com.increff.pos.exception.ApiException;
 import com.increff.pos.model.ProductData;
 import com.increff.pos.model.ProductForm;
-import com.increff.pos.model.ProductUpdateForm;
 import com.increff.pos.pojo.BrandPojo;
 import com.increff.pos.pojo.ProductPojo;
 import com.increff.pos.service.BrandService;
@@ -13,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,15 +34,13 @@ public class ProductDto {
     private InventoryService inventoryService;
 
     public ProductForm add(ProductForm productForm) throws ApiException {
-        validate(productForm, "Parameters in the Insert Form cannot be Null");
-
+        validateProductForm(productForm);
+        productForm = normalize(productForm);
         Integer brandId = getBrandIdByBrandCategory(productForm.getBrand(), productForm.getCategory());
         ProductPojo productPojo=convertProductFormtoProductPojo(productForm, brandId);
         productPojo.setBrandCategoryId(brandId);
-
         productService.add(productPojo);
         return productForm;
-
     }
 
     public Integer bulkAdd(List<ProductForm> productFormList)throws ApiException
@@ -81,16 +79,17 @@ public class ProductDto {
         return productDataList;
     }
 
-    public ProductUpdateForm update(ProductUpdateForm productUpdateForm)throws ApiException
+    public ProductForm update(ProductForm productForm)throws ApiException
     {
-        validate(productUpdateForm,"Parameters in thr Update form Cannot be Null");
-        ProductPojo productPojo=productService.selectByBarcode(productUpdateForm.getBarcode());
-        BrandPojo brandPojo = brandService.selectCheckByBrandCategory(productUpdateForm.getBrand(), productUpdateForm.getCategory());
+        validateProductForm(productForm);
+        productForm=normalize(productForm);
+        ProductPojo productPojo=productService.selectByBarcode(productForm.getBarcode());
+        BrandPojo brandPojo = brandService.selectCheckByBrandCategory(productForm.getBrand(), productForm.getCategory());
 
        // Integer brandId=getBrandIdByBrandCategory(productUpdateForm.getBrand(),productUpdateForm.getCategory());
-        ProductPojo productPojoConverted = convertProductFormtoProductPojo(productUpdateForm, brandPojo.getId());
+        ProductPojo productPojoConverted = convertProductFormtoProductPojo(productForm, brandPojo.getId());
         productService.update(productPojoConverted);
-        return productUpdateForm;
+        return productForm;
     }
 
     public Integer getBrandIdByBrandCategory(String brand, String category) throws ApiException {
@@ -137,6 +136,41 @@ public class ProductDto {
             throwError(errorList);
         }
     }
+
+    public void validateProductForm(ProductForm productForm)throws ApiException
+    {
+        if(isNull(productForm.getBrand()) || productForm.getBrand().trim().isEmpty())
+        {
+            throw new ApiException("Brand cannot be Empty!");
+        }
+        if(isNull(productForm.getCategory()) || productForm.getCategory().trim().isEmpty())
+        {
+            throw new ApiException("Category cannot be Empty!");
+        }
+        if(isNull(productForm.getName()) || productForm.getName().trim().isEmpty())
+        {
+            throw new ApiException("Product Name cannot be Empty!");
+        }
+        if(isNull(productForm.getBarcode()) || productForm.getBarcode().trim().isEmpty())
+        {
+            throw new ApiException("Barcode cannot be Empty!");
+        }
+        if(isNull(productForm.getMrp()) || productForm.getMrp()<=0)
+        {
+            throw new ApiException("Kindly Enter valid Mrp");
+        }
+    }
+    public ProductForm normalize(ProductForm productForm)
+    {
+        DecimalFormat df = new DecimalFormat("0.00");
+        productForm.setName(productForm.getName().trim().toLowerCase());
+        productForm.setBrand(productForm.getBrand().trim().toLowerCase());
+        productForm.setCategory(productForm.getCategory().trim().toLowerCase());
+        productForm.setBarcode(productForm.getBarcode().trim());
+        productForm.setMrp(Double.parseDouble(df.format(productForm.getMrp())));
+        return productForm;
+    }
+
 
 
 

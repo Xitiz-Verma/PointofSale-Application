@@ -24,7 +24,7 @@ public class OrderItemService {
 
     public void add(OrderItemPojo orderItemPojo)throws ApiException
     {
-      if(orderItemPojo.getQuantiy()<=0)
+      if(orderItemPojo.getQuantity()<=0)
         {
             throw new ApiException("Quantity must be greater than 0");
         }
@@ -56,7 +56,7 @@ public class OrderItemService {
     {
         getCheck(orderItemPojo.getId());
         OrderItemPojo orderItemPojo2=orderItemDao.select(orderItemPojo.getId());
-        orderItemPojo2.setQuantiy(orderItemPojo.getQuantiy());
+        orderItemPojo2.setQuantity(orderItemPojo.getQuantity());
         orderItemPojo2.setSellingPrice(orderItemPojo.getSellingPrice());
         orderItemDao.update();//symbolic
     }
@@ -71,6 +71,11 @@ public class OrderItemService {
     public List<OrderItemPojo> selectFromOrderId(Integer orderId)
     {
         return orderItemDao.selectFromOrderId(orderId);
+    }
+
+    public List<OrderItemPojo> selectFormOrderIdList(List<Integer>orderIdList)
+    {
+        return orderItemDao.selectFromOrderIdList(orderIdList);
     }
 
     public OrderItemPojo selectFromOrderIdBarcode(Integer orderId,String barcode)

@@ -33,6 +33,7 @@ public class BrandDtoHelper {
         return brandPojo;
     }
 
+
     public static List<BrandPojo> convertBrandFormtoBrandPojoList(List<BrandForm> brandFormList){
         List<BrandPojo> brandPojoList = new ArrayList<>();
         for (BrandForm brandForm : brandFormList) {

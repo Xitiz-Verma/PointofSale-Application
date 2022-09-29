@@ -24,10 +24,7 @@ public class InventoryDao extends AbstractDao{
     {
         return select(InventoryPojo.class,id);
     }
-    public void update()
-    {
-        //Symbolic
-    }
+
     public List<InventoryPojo> selectAll()
     {
         return selectAll(InventoryPojo.class);
@@ -53,5 +50,9 @@ public class InventoryDao extends AbstractDao{
         return query.getResultList();
     }
 
+    public void update()
+    {
+        //Symbolic
+    }
 
 }

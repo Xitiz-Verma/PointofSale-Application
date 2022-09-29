@@ -40,7 +40,13 @@ public abstract class AbstractDao {
         return query.getResultList().stream().findFirst().orElse(null);
     }
 
-    public EntityManager em() {
+    public <T> List<T> getMultiple(TypedQuery<T> query)
+    {
+        return query.getResultList();
+    }
+
+    public EntityManager em()
+    {
         return em;
     }
 }

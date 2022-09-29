@@ -43,6 +43,13 @@ public class OrderItemDao extends AbstractDao{
         return query.getResultList();
     }
 
+    public List<OrderItemPojo> selectFromOrderIdList(List<Integer>orderIdList)
+    {
+        TypedQuery<OrderItemPojo>query= em().createQuery(SELECT_BY_ORDER_ID_LIST, OrderItemPojo.class);
+        query.setParameter("orderIdList",orderIdList);
+        return query.getResultList();
+    }
+
     public OrderItemPojo selectFromOrderIdBarcode(Integer orderId,String barcode)
     {
         TypedQuery<OrderItemPojo> query=em().createQuery(SELECT_BY_ORDER_ID_BARCODE, OrderItemPojo.class);
@@ -53,7 +60,7 @@ public class OrderItemDao extends AbstractDao{
 
     public void update()
     {
-        //Symbolic
+        //SYMBOLIC
     }
 
     public int delete(int id)

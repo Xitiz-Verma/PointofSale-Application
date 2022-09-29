@@ -16,14 +16,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.validation.Validation;
-import javax.validation.ValidatorFactory;
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.increff.pos.dto.dtoHelper.OrderItemDtoHelper.convertOrderItemFormToOrderItemPojo;
 import static com.increff.pos.dto.dtoHelper.OrderItemDtoHelper.convertOrderItemPojoToOrderItemData;
-import static com.increff.pos.util.DataUtil.validate;
 import static java.util.Objects.isNull;
 
 @Service
@@ -91,7 +88,7 @@ public class OrderItemDto {
     @Transactional(rollbackFor = ApiException.class)
     public OrderItemUpdateForm update(OrderItemUpdateForm orderItemUpdateForm)throws ApiException
     {
-        validate(orderItemUpdateForm,"Body values cant be Null");
+        validateOrderUpdateFormUtil(orderItemUpdateForm);
         int orderId=orderItemService.get(orderItemUpdateForm.getId()).getOrderId();
         if(checkOrderStatus(orderId))
         {
@@ -122,7 +119,7 @@ public class OrderItemDto {
         int availqty=inventoryService.get(inventoryPojo.getBarcode()).getQuantity();
         InventoryForm inventoryForm=new InventoryForm();
         inventoryForm.setBarcode(inventoryPojo.getBarcode());
-        inventoryForm.setQuantity(availqty+orderItemPojo.getQuantiy());
+        inventoryForm.setQuantity(availqty+orderItemPojo.getQuantity());
 
         inventoryService.update(inventoryForm);
         orderItemService.delete(id);
@@ -134,7 +131,7 @@ public class OrderItemDto {
     @Transactional(rollbackFor = ApiException.class)
     private void validateOrderItemForm(OrderItemForm orderItemForm)throws ApiException
     {
-        validate(orderItemForm,"Body values cant be Null");
+        validateOrderItemFormUtil(orderItemForm);
 
         if(orderItemService.selectFromOrderIdBarcode(orderItemForm.getOrderId(),orderItemForm.getBarcode()) != null)
         {
@@ -186,29 +183,63 @@ public class OrderItemDto {
     @Transactional(rollbackFor = ApiException.class)
     private void updateInventoryQty(OrderItemUpdateForm orderItemUpdateForm)throws ApiException
     {
-        if(orderItemUpdateForm.getQuantity()<=0)
-        {
-            throw new ApiException("Quantity must be greater than 0");
-        }
 
         OrderItemPojo orderItemExist = orderItemService.get(orderItemUpdateForm.getId());
 
         InventoryPojo inventoryPojo= inventoryService.selectByBarcode(orderItemExist.getBarcode());
+
         if(isNull(inventoryPojo))
         {
             throw new ApiException("Product with given barcode does not exist ,barocde : "+orderItemExist.getBarcode());
         }
 
         int availQty=inventoryService.get(inventoryPojo.getBarcode()).getQuantity();
-        if(!(availQty + orderItemExist.getQuantiy() >= orderItemUpdateForm.getQuantity()))
+        if(!(availQty + orderItemExist.getQuantity() >= orderItemUpdateForm.getQuantity()))
         {
             throw new ApiException("Selected Quantity is more than available quantity , Availale Quantity is : "+availQty);
         }
 
         InventoryForm invUpdate = new InventoryForm();
         invUpdate.setBarcode(inventoryPojo.getBarcode());
-        invUpdate.setQuantity(availQty+orderItemExist.getQuantiy()-orderItemUpdateForm.getQuantity());
+        invUpdate.setQuantity(availQty+orderItemExist.getQuantity()-orderItemUpdateForm.getQuantity());
         inventoryService.update(invUpdate);
     }
+
+    public void validateOrderItemFormUtil(OrderItemForm orderItemForm)throws ApiException
+    {
+        if(isNull(orderItemForm.getOrderId()))
+        {
+            throw new ApiException("OrderId cannot be Empty!");
+        }
+        if(isNull(orderItemForm.getBarcode())||orderItemForm.getBarcode().isEmpty())
+        {
+            throw new ApiException("Barcode cannot be Empty!");
+        }
+        if(isNull(orderItemForm.getQuantity())||orderItemForm.getQuantity()<=0)
+        {
+            throw new ApiException("Quantity is invalid");
+        }
+        if(isNull(orderItemForm.getSellingPrice())||orderItemForm.getSellingPrice()<=0)
+        {
+            throw new ApiException("Selling Price is invalid");
+        }
+    }
+
+    public void validateOrderUpdateFormUtil(OrderItemUpdateForm orderItemUpdateForm)throws ApiException
+    {
+        if(isNull(orderItemUpdateForm.getId()))
+        {
+            throw new ApiException("OrderId cannot be Empty!");
+        }
+        if(isNull(orderItemUpdateForm.getQuantity())||orderItemUpdateForm.getQuantity()<=0)
+        {
+            throw new ApiException("Quantity is invalid");
+        }
+        if(isNull(orderItemUpdateForm.getSellingPrice())||orderItemUpdateForm.getSellingPrice()<=0)
+        {
+            throw new ApiException("Selling Price is invalid");
+        }
+    }
+
 
 }

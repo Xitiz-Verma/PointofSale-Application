@@ -3,7 +3,6 @@ package com.increff.pos.dto.dtoHelper;
 import com.increff.pos.exception.ApiException;
 import com.increff.pos.model.ProductData;
 import com.increff.pos.model.ProductForm;
-import com.increff.pos.model.ProductUpdateForm;
 import com.increff.pos.pojo.BrandPojo;
 import com.increff.pos.pojo.ProductPojo;
 
@@ -26,16 +25,6 @@ public class ProductDtoHelper {
         productPojo.setMrp(productForm.getMrp());
         return productPojo;
 
-    }
-
-    public static ProductPojo convertProductFormtoProductPojo(ProductUpdateForm productUpdateForm, Integer brandCategoryId)
-    {
-        ProductPojo productPojo=new ProductPojo();
-        productPojo.setName(productUpdateForm.getName());
-        productPojo.setBrandCategoryId(brandCategoryId);
-        productPojo.setBarcode(productUpdateForm.getBarcode());
-        productPojo.setMrp(productUpdateForm.getMrp());
-        return productPojo;
     }
 
     public static ProductData convertProductPojotoProductData(ProductPojo productPojo, BrandPojo brandPojo)

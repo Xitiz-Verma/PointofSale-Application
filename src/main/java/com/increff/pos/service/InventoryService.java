@@ -73,10 +73,6 @@ public class InventoryService {
 
     public void update(InventoryForm inventoryForm)throws ApiException
     {
-        if(inventoryForm.getQuantity()<0)
-        {
-            throw new ApiException("Quantity must be greater than 0");
-        }
 //        TODO get by barcode
         InventoryPojo inventoryPojo=inventoryDao.selectByBarcode(inventoryForm.getBarcode());
         inventoryPojo.setQuantity(inventoryForm.getQuantity());

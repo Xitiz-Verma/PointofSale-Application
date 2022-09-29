@@ -14,16 +14,16 @@ public class SalesReport {
     private Integer quantity;
     private Double revenue;
 
-    //Default Constructor
+    //DEFAULT CONSTRUCTOR
     public SalesReport()
     {
 
     }
 
-    //Param Constructor
+    //PARAM CONSTRUCTOR
     public SalesReport(String brand,String category,Integer quantity,Double revenue)
     {
-        DecimalFormat decimalFormat=new DecimalFormat("#.##");
+        DecimalFormat decimalFormat=new DecimalFormat("0.00");
         this.brand=brand;
         this.category=category;
         this.quantity=quantity;

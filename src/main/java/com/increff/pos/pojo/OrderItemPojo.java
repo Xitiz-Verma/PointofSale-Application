@@ -25,7 +25,7 @@ public class OrderItemPojo extends AbstractPojo{
     private String barcode;
 
     @Column(nullable = false)
-    private Integer quantiy;
+    private Integer quantity;
 
     @Column(nullable = false)
     private Double sellingPrice;

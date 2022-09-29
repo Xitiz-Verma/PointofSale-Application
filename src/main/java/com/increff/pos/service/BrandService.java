@@ -12,8 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static com.increff.pos.util.DataUtil.normalize;
-import static com.increff.pos.util.DataUtil.validate;
 import static com.increff.pos.util.ErrorUtil.throwError;
 import static java.util.Objects.isNull;
 
@@ -30,15 +28,12 @@ public class BrandService {
     }
 
     public void add(BrandPojo brandPojo) throws ApiException {
-        normalize(brandPojo);
         checkUnique(brandPojo);
         brandDao.add(brandPojo);
     }
 
-    public void bulkAdd(List<BrandPojo> brandPojoList) throws ApiException {
-        for (BrandPojo brandPojo : brandPojoList) {
-            normalize(brandPojo);
-        }
+    public void bulkAdd(List<BrandPojo> brandPojoList) throws ApiException
+    {
         List<String> errorList = new ArrayList<>();
         Integer row = 1;
         try{
@@ -64,16 +59,14 @@ public class BrandService {
     public BrandPojo getCheck(Integer id) throws ApiException {
         BrandPojo brandPojo = brandDao.select(id);
         if (isNull(brandPojo)) {
-            throw new ApiException("Brand with given id does not exist,id :" + id);
+            throw new ApiException("Brand with given id does not exist,id : " + id);
         }
         return brandPojo;
     }
 
-    public void update(BrandPojo brandPojo) throws ApiException {
-        validate(brandPojo, "Brand or Category cannot be empty");
-        normalize(brandPojo);
+    public void update(BrandPojo brandPojo) throws ApiException
+    {
         checkUnique(brandPojo);
-
         BrandPojo exists = getCheck(brandPojo.getId());
         exists.setBrand(brandPojo.getBrand());
         exists.setCategory(brandPojo.getCategory());
@@ -92,17 +85,17 @@ public class BrandService {
         return brandPojo;
     }
 
-    public BrandPojo selectByBrand(String brand) {
+    public List<BrandPojo> selectByBrand(String brand) {
         return brandDao.selectByBrand(brand);
     }
 
-    public BrandPojo selectByCategory(String category) {
+    public List<BrandPojo> selectByCategory(String category) {
         return brandDao.selectByCategory(category);
     }
 
     private void checkUnique(BrandPojo brandPojo) throws ApiException {
         if (!Objects.isNull(selectByBrandCategory(brandPojo.getBrand(), brandPojo.getCategory()))) {
-            throw new ApiException(brandPojo.getBrand() + " - " + brandPojo.getCategory() + "pair already exists");
+            throw new ApiException(brandPojo.getBrand() + " - " + brandPojo.getCategory() + " pair already exists");
         }
     }
 

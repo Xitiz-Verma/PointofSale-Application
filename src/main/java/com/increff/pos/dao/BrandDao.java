@@ -33,19 +33,20 @@ public class BrandDao extends AbstractDao {
         return getSingle(query);
     }
 
-    public BrandPojo selectByBrand(String brand) {
+    public List<BrandPojo> selectByBrand(String brand) {
         TypedQuery<BrandPojo> query = em().createQuery(SELECT_BY_BRAND, BrandPojo.class);
         query.setParameter("brand", brand);
-        return getSingle(query);
+        return getMultiple(query);
     }
 
-    public BrandPojo selectByCategory(String category) {
+    public List<BrandPojo> selectByCategory(String category) {
         TypedQuery<BrandPojo> query = em().createQuery(SELECT_BY_CATEGORY, BrandPojo.class);
         query.setParameter("category", category);
-        return getSingle(query);
+        return getMultiple(query);
     }
 
-    public void update() {
-
+    public void update()
+    {
+        //SYMBOLIC
     }
 }

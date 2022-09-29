@@ -10,9 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static com.increff.pos.dto.dtoHelper.BrandDtoHelper.*;
-import static com.increff.pos.util.DataUtil.validate;
+import static java.util.Objects.isNull;
 
 @Service
 public class BrandDto {
@@ -32,8 +33,10 @@ public class BrandDto {
         return brandDataList;
     }
 
-    public BrandForm add(BrandForm brandForm) throws ApiException {
-        validate(brandForm, "Neither Brand nor Category cannot be NULL");
+    public BrandForm add(BrandForm brandForm) throws ApiException
+    {
+        validateBrandForm(brandForm);
+        brandForm=normalize(brandForm);
         brandService.add(convertBrandFormtoBrandPojo(brandForm));
         return brandForm;
     }
@@ -51,18 +54,38 @@ public class BrandDto {
 
     }
 
-
     public BrandData get(Integer id) throws ApiException {
         return convertBrandPojoToBrandData(brandService.get(id));
     }
 
-    public BrandData update(BrandData brandData) throws ApiException {
-        validate(brandData, "brand or category cannot be null");
-        if (productService.selectByBrandId(brandData.getId()).isEmpty()) {
-            throw new ApiException("Cannot Update" + brandData.getBrand() + " - " + brandData.getCategory() + "as product for this exists");
+    public BrandForm update(BrandForm brandForm,Integer id) throws ApiException
+    {
+        if (productService.selectByBrandId(id).isEmpty())
+        {
+            throw new ApiException("Cannot Update" + brandForm.getBrand() + " - " + brandForm.getCategory() + "as product for this exists");
         }
-        brandService.update(convertBrandDatatoBrandPojo(brandData));
-        return brandData;
+        validateBrandForm(brandForm);
+        brandForm=normalize(brandForm);
+        brandService.update(convertBrandFormtoBrandPojo(brandForm));
+        return brandForm;
+    }
+
+    public void validateBrandForm(BrandForm brandForm)throws ApiException
+    {
+        if(isNull(brandForm.getBrand()) || brandForm.getBrand().isEmpty())
+        {
+            throw new ApiException("Brand cannot be Empty!");
+        }
+        if(isNull(brandForm.getCategory()) || brandForm.getCategory().isEmpty())
+        {
+            throw new ApiException("Category cannot be Empty!");
+        }
+    }
+
+    public BrandForm normalize(BrandForm brandForm){
+        brandForm.setBrand(brandForm.getBrand().trim().toLowerCase());
+        brandForm.setCategory(brandForm.getCategory().trim().toLowerCase());
+        return brandForm;
     }
 
 }

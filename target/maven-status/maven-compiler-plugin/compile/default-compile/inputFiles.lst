@@ -23,10 +23,8 @@
 /home/xitiz/Documents/PointOfSale/src/main/java/com/increff/pos/model/InventoryReport.java
 /home/xitiz/Documents/PointOfSale/src/main/java/com/increff/pos/pojo/OrderItemPojo.java
 /home/xitiz/Documents/PointOfSale/src/main/java/com/increff/pos/dao/OrderItemDao.java
-/home/xitiz/Documents/PointOfSale/src/main/java/com/increff/pos/model/InventoryUpdateForm.java
 /home/xitiz/Documents/PointOfSale/src/main/java/com/increff/pos/dao/ProductDao.java
 /home/xitiz/Documents/PointOfSale/src/main/java/com/increff/pos/pojo/AbstractPojo.java
-/home/xitiz/Documents/PointOfSale/src/main/java/com/increff/pos/model/ProductUpdateForm.java
 /home/xitiz/Documents/PointOfSale/src/main/java/com/increff/pos/model/BrandData.java
 /home/xitiz/Documents/PointOfSale/src/main/java/com/increff/pos/dto/OrderItemDto.java
 /home/xitiz/Documents/PointOfSale/src/main/java/com/increff/pos/dto/BrandDto.java

@@ -34,7 +34,6 @@ com/increff/pos/model/SalesReportForm.class
 com/increff/pos/controller/AdviceController.class
 com/increff/pos/controller/ProductController.class
 com/increff/pos/model/ProductData.class
-com/increff/pos/model/ProductUpdateForm.class
 com/increff/pos/pojo/OrderItemPojo.class
 com/increff/pos/model/BrandForm.class
 com/increff/pos/controller/OrderController.class

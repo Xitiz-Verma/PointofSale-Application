@@ -12,7 +12,6 @@ import static java.util.Objects.isNull;
 
 import static com.increff.pos.dto.dtoHelper.ProductDtoHelper.validateBarcode;
 import static com.increff.pos.dto.dtoHelper.ProductDtoHelper.validateMRP;
-import static com.increff.pos.util.DataUtil.normalize;
 
 @Service
 @Transactional(rollbackFor = ApiException.class)
@@ -22,7 +21,6 @@ public class ProductService {
     private ProductDao productDao;
 
     public void add(ProductPojo productPojo)throws ApiException{
-        normalize(productPojo);
         validateBarcode(productPojo.getBarcode());
         validateMRP(productPojo.getMrp());
         checkBarcodeExist(productPojo.getBarcode());
@@ -49,7 +47,6 @@ public class ProductService {
 
     public void update(ProductPojo productPojo)throws ApiException
     {
-        normalize(productPojo);
         validateBarcode(productPojo.getBarcode());
         validateMRP(productPojo.getMrp());
         ProductPojo productPojo1 = productDao.selectByBarcode(productPojo.getBarcode());

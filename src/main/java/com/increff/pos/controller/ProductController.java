@@ -5,7 +5,6 @@ import com.increff.pos.dto.ProductDto;
 import com.increff.pos.exception.ApiException;
 import com.increff.pos.model.ProductData;
 import com.increff.pos.model.ProductForm;
-import com.increff.pos.model.ProductUpdateForm;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,9 +49,9 @@ public class ProductController {
 
     @ApiOperation(value= " Update a Product ")
     @RequestMapping(path="" , method =RequestMethod.PUT)
-    public ProductUpdateForm updateProduct(@RequestBody ProductUpdateForm productUpdateForm)throws ApiException
+    public ProductForm updateProduct(@RequestBody ProductForm productForm)throws ApiException
     {
-        return productDto.update(productUpdateForm);
+        return productDto.update(productForm);
     }
 
 }
