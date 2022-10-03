@@ -21,8 +21,8 @@ public class InventoryController {
     @Autowired
     private InventoryDto inventoryDto;
 
-    @ApiOperation(value="Gets a Inventory Details by Id")
-    @RequestMapping(path="/{id}", method =RequestMethod.GET)
+    @ApiOperation(value="Gets a Inventory Details by Barcode")
+    @RequestMapping(path="/{barcode}", method =RequestMethod.GET)
     public InventoryData getInventory(@PathVariable String barcode)throws ApiException{
         return inventoryDto.get(barcode);
     }
@@ -49,7 +49,7 @@ public class InventoryController {
     }
 
     @ApiOperation(value="Updates an Inventory")
-    @RequestMapping(path="/{id}", method = RequestMethod.PUT)
+    @RequestMapping(path="/", method = RequestMethod.PUT)
     public InventoryDataUI updateInventory(@RequestBody InventoryForm  inventoryForm)throws ApiException
     {
         return inventoryDto.update(inventoryForm);

@@ -33,6 +33,7 @@ public class OrderItemDtoHelper {
     {
         OrderItemPojo orderItemPojo=new OrderItemPojo();
         orderItemPojo.setQuantity(orderItemUpdateForm.getQuantity());
+        orderItemPojo.setBarcode(orderItemUpdateForm.getBarcode());
         orderItemPojo.setSellingPrice(orderItemUpdateForm.getSellingPrice());
         orderItemPojo.setId(orderItemUpdateForm.getId());
         return orderItemPojo;

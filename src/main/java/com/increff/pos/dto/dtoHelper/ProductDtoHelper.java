@@ -34,7 +34,6 @@ public class ProductDtoHelper {
         productData.setId(productPojo.getId());
         productData.setBrand(brandPojo.getBrand());
         productData.setCategory(brandPojo.getCategory());
-        productData.setBrandCategoryId(productPojo.getBrandCategoryId());
         productData.setBarcode(productPojo.getBarcode());
         productData.setMrp(productPojo.getMrp());
         productData.setName(productPojo.getName());

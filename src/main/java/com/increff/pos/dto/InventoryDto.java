@@ -37,6 +37,7 @@ public class InventoryDto {
     {
         return convertInventoryPojotoInventoryData(inventoryService.selectByBarcode(barcode));
     }
+
     public List<InventoryData> getAll()throws ApiException
     {
         List<InventoryPojo> inventoryPojoList = inventoryService.getAll();

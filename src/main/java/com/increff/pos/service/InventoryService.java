@@ -73,8 +73,7 @@ public class InventoryService {
 
     public void update(InventoryForm inventoryForm)throws ApiException
     {
-//        TODO get by barcode
-        InventoryPojo inventoryPojo=inventoryDao.selectByBarcode(inventoryForm.getBarcode());
+        InventoryPojo inventoryPojo=getCheck(inventoryForm.getBarcode());
         inventoryPojo.setQuantity(inventoryForm.getQuantity());
         inventoryDao.update();
     }
@@ -87,14 +86,9 @@ public class InventoryService {
         }
         return inventoryPojo;
     }
-    public InventoryPojo selectByBarcode(String barcode)
+    public InventoryPojo selectByBarcode(String barcode)throws ApiException
     {
-        return inventoryDao.selectByBarcode(barcode);
-    }
-
-    public InventoryPojo selectByProductId(Integer productId)
-    {
-        return inventoryDao.selectByProductId(productId);
+        return getCheck(barcode);
     }
 
     public List<InventoryReport> getInventoryReport()

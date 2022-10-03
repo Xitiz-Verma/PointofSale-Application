@@ -13,6 +13,9 @@ public class OrderItemUpdateForm {
     @NotNull(message="Id cant be Null")
     private Integer id;
 
+    @NotNull(message = "Barcode cant be Null")
+    private String barcode;
+
     @Min(value = 1,message = "Quantity must be greater than 1")
     @NotNull(message = "Quantity cannot be empty")
     private Integer quantity;

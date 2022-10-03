@@ -231,6 +231,10 @@ public class OrderItemDto {
         {
             throw new ApiException("OrderId cannot be Empty!");
         }
+        if(isNull(orderItemUpdateForm.getBarcode())||orderItemUpdateForm.getBarcode().isEmpty())
+        {
+            throw new ApiException("Barcode cannot be Empty!");
+        }
         if(isNull(orderItemUpdateForm.getQuantity())||orderItemUpdateForm.getQuantity()<=0)
         {
             throw new ApiException("Quantity is invalid");
