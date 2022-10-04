@@ -17,15 +17,12 @@ import org.apache.fop.apps.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.xml.transform.*;
 import javax.xml.transform.sax.SAXResult;
 import javax.xml.transform.stream.StreamSource;
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.StringReader;
+import java.io.*;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -39,6 +36,7 @@ import static com.increff.pos.dto.dtoHelper.OrderItemDtoHelper.convertOrderItemP
 import static com.increff.pos.util.HelperUtil.jaxbObjectToXML;
 import static com.increff.pos.util.HelperUtil.returnFileStream;
 import static java.util.Objects.isNull;
+import static org.springframework.util.CollectionUtils.isEmpty;
 
 @Service
 public class OrderDto {
@@ -76,11 +74,15 @@ public class OrderDto {
 
     public Integer updateOrderStatusPlaced(Integer id)throws ApiException
     {
+        if(isEmpty(getOrderItemforOrderUtil(id)))
+        {
+            throw new ApiException("Cannot Place Empty Order with Order Id :"+id);
+        }
         orderService.updateOrderStatusPlaced(id);
         return id;
     }
 
-    public byte[] getOrderInvoice(int orderId)throws ApiException, IOException, TransformerException
+    public void getOrderInvoice(int orderId, HttpServletResponse response)throws ApiException, IOException, TransformerException
     {
         List<OrderItemPojo> orderItemPojoList = getOrderItemforOrderUtil(orderId);
         List<OrderItemData> orderItemDataList = new ArrayList<>();
@@ -95,26 +97,30 @@ public class OrderDto {
 
         for(OrderItemData orderItemData : orderItemDataList)
         {
-            total+=orderItemData.getQuantity()*orderItemData.getQuantity();
+            total+=orderItemData.getQuantity()*orderItemData.getSellingPrice();
         }
-        OrderItemDataList orderItemDataList2=new OrderItemDataList(orderItemDataList,time,total,orderId);
+        InvoiceData invoiceData2 =new InvoiceData(orderItemDataList,time,total,orderId);
 
-        String xml = jaxbObjectToXML(orderItemDataList2);
+        String xml = jaxbObjectToXML(invoiceData2);
         File xsltFile = new File("src", "invoice.xsl");
-        File pdfFile = new File("src", "invoice.pdf");
         System.out.println(xml);
-        convertToPDF(orderItemDataList2, xsltFile, pdfFile, xml);
-        return returnFileStream();
+        byte[] pdfbytes = convertToPDF(xsltFile, xml);
+        response.setContentType("application/pdf");
+        response.addHeader("Content-Disposition", "attachment; filename=" + "Invoice.pdf");
+        response.setContentLengthLong(pdfbytes.length);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        baos.write(pdfbytes);
+        baos.writeTo(response.getOutputStream());
+        baos.close();
     }
 
-    private void convertToPDF(OrderItemDataList team, File xslt, File pdf, String xml) throws IOException, TransformerException {
+    private byte[] convertToPDF(File xslt, String xml) throws IOException, TransformerException {
 
         FOUserAgent foUserAgent = fopFactory.newFOUserAgent();
         // configure foUserAgent as desired
 
         // Setup output
-        OutputStream out = new java.io.FileOutputStream(pdf);
-        out = new java.io.BufferedOutputStream(out);
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
         try {
             // Construct fop with desired output format
             Fop fop = null;
@@ -142,6 +148,10 @@ public class OrderDto {
         } finally {
             out.close();
         }
+        try(OutputStream outputStream = new FileOutputStream("invoice.pdf")) {
+            out.writeTo(outputStream);
+        }
+         return out.toByteArray();
     }
 
     public List<OrderItemPojo> getOrderItemforOrderUtil(Integer orderId)throws ApiException
@@ -184,7 +194,7 @@ public class OrderDto {
         }
 
         List<SalesReport> salesReportsDataList = getSalesReportUtil(salesReportForm);
-        if(CollectionUtils.isEmpty(salesReportsDataList))
+        if(isEmpty(salesReportsDataList))
         {
             throw new ApiException("No Sales for a givwn range");
         }
@@ -198,7 +208,7 @@ public class OrderDto {
 
         List<Integer> orderIdList = orderPojoList.stream().map(orderPojo -> orderPojo.getId()).collect(Collectors.toList());
 
-        if(CollectionUtils.isEmpty(orderIdList))
+        if(isEmpty(orderIdList))
         {
             throw new ApiException("No Sales");
         }
@@ -256,7 +266,7 @@ public class OrderDto {
         {
             if(productPojoMap.containsKey(orderItemPojo.getId()))
             {
-                ProductPojo temp=productPojoMap.get(orderItemPojo.getBarcode());
+                ProductPojo temp=productPojoMap.get(productService.selectByBarcode(orderItemPojo.getBarcode()).getId());
                 BrandPojo brandPojo = brandService.get(temp.getBrandCategoryId());
                 SalesReport salesReport = new SalesReport(brandPojo.getBrand(), brandPojo.getCategory(),  orderItemPojo.getQuantity(), orderItemPojo.getSellingPrice() * orderItemPojo.getQuantity());
                 commonPojo.add(salesReport);

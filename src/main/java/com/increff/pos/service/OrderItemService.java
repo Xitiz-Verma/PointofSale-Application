@@ -4,6 +4,7 @@ import com.google.protobuf.Api;
 import com.increff.pos.dao.OrderItemDao;
 import com.increff.pos.exception.ApiException;
 import com.increff.pos.pojo.OrderItemPojo;
+import com.increff.pos.pojo.OrderPojo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,37 +39,46 @@ public class OrderItemService {
         return orderItemDao.selectAll();
     }
 
-    public OrderItemPojo get(Integer id)throws ApiException
+    public OrderItemPojo get(Integer orderId,String barcode)throws ApiException
     {
-        return getCheck(id);
+        return getCheckIdBarcode(orderId,barcode);
 
     }
 
-    public OrderItemPojo getCheck(Integer id)throws ApiException
-    {
-        OrderItemPojo orderItemPojo=orderItemDao.select(id);
-        if(isNull(orderItemPojo))
-        {
-            throw new ApiException("OrderItem with given Id does Not exist, id : "+id);
-        }
-        return orderItemPojo;
-    }
+//    public OrderItemPojo getCheck(Integer orderId,String barcode)throws ApiException
+//    {
+//        OrderItemPojo orderItemPojo=getCheckIdBarcode(orderId,barcode);
+//        if(isNull(orderItemPojo))
+//        {
+//            throw new ApiException("OrderItem with given Id does Not exist, id : "+orderId + " barcode "+barcode);
+//        }
+//        return orderItemPojo;
+//    }
 
     public void update(OrderItemPojo orderItemPojo)throws ApiException
     {
-        getCheck(orderItemPojo.getId());
-        OrderItemPojo orderItemPojo2=orderItemDao.select(orderItemPojo.getId());
+
+        OrderItemPojo orderItemPojo2=getCheckIdBarcode(orderItemPojo.getOrderId(), orderItemPojo.getBarcode());
         orderItemPojo2.setQuantity(orderItemPojo.getQuantity());
         orderItemPojo2.setSellingPrice(orderItemPojo.getSellingPrice());
-        orderItemDao.update();//symbolic
+        orderItemDao.update();//SYMBOLIC
     }
 
-    public void delete(Integer id)throws ApiException
+    public void delete(Integer orderId,String barcode)throws ApiException
     {
-        getCheck(id);
-        orderItemDao.delete(id);
+        getCheckIdBarcode(orderId,barcode);
+        orderItemDao.delete(orderId,barcode);
     }
 
+    public OrderItemPojo getCheckIdBarcode(Integer orderId,String barcode)throws ApiException
+    {
+        OrderItemPojo orderItemPojo = orderItemDao.selectFromOrderIdBarcode(orderId,barcode);
+        if(isNull(orderItemPojo))
+        {
+            throw new ApiException("Order Item with barcode "+barcode+" is not present in the orderid "+orderId);
+        }
+        return orderItemPojo;
+    }
 
     public List<OrderItemPojo> selectFromOrderId(Integer orderId)
     {

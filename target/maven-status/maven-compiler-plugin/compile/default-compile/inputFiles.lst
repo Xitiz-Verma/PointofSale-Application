@@ -1,3 +1,4 @@
+/home/xitiz/Documents/PointOfSale/src/main/java/com/increff/pos/model/InvoiceData.java
 /home/xitiz/Documents/PointOfSale/src/main/java/com/increff/pos/util/ErrorUtil.java
 /home/xitiz/Documents/PointOfSale/src/main/java/com/increff/pos/model/OrderItemForm.java
 /home/xitiz/Documents/PointOfSale/src/main/java/com/increff/pos/model/SalesReportForm.java
@@ -45,7 +46,6 @@
 /home/xitiz/Documents/PointOfSale/src/main/java/com/increff/pos/dto/ProductDto.java
 /home/xitiz/Documents/PointOfSale/src/main/java/com/increff/pos/controller/InventoryController.java
 /home/xitiz/Documents/PointOfSale/src/main/java/com/increff/pos/service/OrderService.java
-/home/xitiz/Documents/PointOfSale/src/main/java/com/increff/pos/model/OrderItemDataList.java
 /home/xitiz/Documents/PointOfSale/src/main/java/com/increff/pos/model/ProductData.java
 /home/xitiz/Documents/PointOfSale/src/main/java/com/increff/pos/dto/dtoHelper/InventoryDtoHelper.java
 /home/xitiz/Documents/PointOfSale/src/main/java/com/increff/pos/spring/WebInitializer.java

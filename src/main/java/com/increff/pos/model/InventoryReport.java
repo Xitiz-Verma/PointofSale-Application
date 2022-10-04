@@ -11,10 +11,5 @@ public class InventoryReport {
     private String category;
     private Integer quantity;
 
-    public InventoryReport(String brand,String category,int quantity)
-    {
-        this.brand=brand;
-        this.category=category;
-        this.quantity=quantity;
-    }
+    
 }

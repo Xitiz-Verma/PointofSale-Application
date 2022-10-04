@@ -33,7 +33,7 @@ function loadProduct(){
 
         // Open an obejct (GET/POST, PATH,
         // ASYN-TRUE/FALSE)
-        xhr.open("GET","http://localhost:9000/pos/products", true);
+        xhr.open("GET","http://localhost:9001/PointOfSale/products", true);
         // When response is ready
         xhr.onload = function () {
             if (this.status === 200) {
@@ -73,7 +73,7 @@ $("#ProductDelete").modal('show');
 function deleteProduct(id){
   $.ajax({
                   type: "DELETE",
-                  url: `http://localhost:9000/pos/products/${id}`,
+                  url: `http://localhost:9001/PointOfSale/products/${id}`,
 
                   success: function (data) {
                      loadProduct()
@@ -154,7 +154,7 @@ else if(BarcodeInput!==Barcode|| BrandInput!==Brand || CategoryInput!==Category 
      },
      processData: false,
      type: 'PUT',
-     url: 'http://localhost:9000/pos/products'
+     url: 'http://localhost:9001/PointOfSale/products'
  });
 
 }
@@ -216,7 +216,7 @@ else{
      },
      processData: false,
      type: 'POST',
-     url: 'http://localhost:9000/pos/products'
+     url: 'http://localhost:9001/PointOfSale/products'
  });
  event.preventDefault();
 }}
@@ -322,7 +322,7 @@ function bulkAddProductUtil(data) {
                    },
                    processData: false,
                    type: 'POST',
-                   url: 'http://localhost:9000/pos/products/upload'
+                   url: 'http://localhost:9001/PointOfSale/products/upload'
                });
         }
         }

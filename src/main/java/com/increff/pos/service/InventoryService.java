@@ -91,8 +91,4 @@ public class InventoryService {
         return getCheck(barcode);
     }
 
-    public List<InventoryReport> getInventoryReport()
-    {
-        return inventoryDao.getInventoryReport();
-    }
 }

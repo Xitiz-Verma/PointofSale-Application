@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.Path;
 import java.util.List;
 
 @Api
@@ -42,17 +43,17 @@ public class OrderItemController {
     }
 
     @ApiOperation(value="Update an OrderItem")
-    @RequestMapping(path = "/orders/order-items/{id}",method = RequestMethod.PUT)
+    @RequestMapping(path = "/orders/order-items/{orderId}",method = RequestMethod.PUT)
     public OrderItemUpdateForm updateorderItem(@RequestBody OrderItemUpdateForm orderItemUpdateForm)throws ApiException
     {
         return orderItemDto.update(orderItemUpdateForm);
     }
 
     @ApiOperation(value="Delete OrderItem Data")
-    @RequestMapping(path = "/orders/order-items/{id}", method=RequestMethod.DELETE)
-    public Integer deleteOrderItem(@PathVariable int id)throws ApiException
+    @RequestMapping(path = "/orders/order-items/{orderId}/barcode/{barcode}", method=RequestMethod.DELETE)
+    public void deleteOrderItem(@PathVariable int orderId, @PathVariable String barcode)throws ApiException
     {
-        return orderItemDto.delete(id);
+        orderItemDto.delete(orderId,barcode);
     }
 
 }

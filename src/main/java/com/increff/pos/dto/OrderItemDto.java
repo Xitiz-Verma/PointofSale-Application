@@ -39,6 +39,11 @@ public class OrderItemDto {
 
     public OrderItemDataUI add(OrderItemForm orderItemForm)throws ApiException
     {
+        int orderId=orderItemForm.getOrderId();
+        if(checkOrderStatus(orderId))
+        {
+            throw new ApiException("Cannot add as Order is already Placed for Order id : "+orderId);
+        }
         validateOrderItemForm(orderItemForm);
         Integer availableQty = getAvailQty(orderItemForm.getBarcode());
 
@@ -89,7 +94,7 @@ public class OrderItemDto {
     public OrderItemUpdateForm update(OrderItemUpdateForm orderItemUpdateForm)throws ApiException
     {
         validateOrderUpdateFormUtil(orderItemUpdateForm);
-        int orderId=orderItemService.get(orderItemUpdateForm.getId()).getOrderId();
+        int orderId=orderItemUpdateForm.getOrderId();
         if(checkOrderStatus(orderId))
         {
             throw new ApiException("Cannot update as Order is already Placed for Order id : "+orderId);
@@ -100,20 +105,20 @@ public class OrderItemDto {
 
     }
 
-    public Integer delete(Integer id)throws ApiException
+    public void delete(Integer orderId,String barcode)throws ApiException
     {
-        int orderId=orderItemService.get(id).getOrderId();
         if(checkOrderStatus(orderId))
         {
-            throw new ApiException("Cannot Delete as Order is alreasy placed");
+            throw new ApiException("Cannot Delete as Order is already placed");
         }
 
-        OrderItemPojo orderItemPojo=orderItemService.get(id);
-        InventoryPojo inventoryPojo= inventoryService.selectByBarcode(orderItemPojo.getBarcode());
+        OrderItemPojo orderItemPojo = orderItemService.selectFromOrderIdBarcode(orderId,barcode);
+
+        InventoryPojo inventoryPojo= inventoryService.selectByBarcode(barcode);
 
         if(isNull(inventoryPojo))
         {
-            throw new ApiException("Product with given id does nopt exist in the inventory");
+            throw new ApiException("Product with given id does not exist in the inventory");
         }
 
         int availqty=inventoryService.get(inventoryPojo.getBarcode()).getQuantity();
@@ -122,8 +127,7 @@ public class OrderItemDto {
         inventoryForm.setQuantity(availqty+orderItemPojo.getQuantity());
 
         inventoryService.update(inventoryForm);
-        orderItemService.delete(id);
-        return id;
+        orderItemService.delete(orderId,barcode);
 
     }
 
@@ -184,7 +188,7 @@ public class OrderItemDto {
     private void updateInventoryQty(OrderItemUpdateForm orderItemUpdateForm)throws ApiException
     {
 
-        OrderItemPojo orderItemExist = orderItemService.get(orderItemUpdateForm.getId());
+        OrderItemPojo orderItemExist = orderItemService.get(orderItemUpdateForm.getOrderId(),orderItemUpdateForm.getBarcode());
 
         InventoryPojo inventoryPojo= inventoryService.selectByBarcode(orderItemExist.getBarcode());
 
@@ -227,7 +231,7 @@ public class OrderItemDto {
 
     public void validateOrderUpdateFormUtil(OrderItemUpdateForm orderItemUpdateForm)throws ApiException
     {
-        if(isNull(orderItemUpdateForm.getId()))
+        if(isNull(orderItemUpdateForm.getOrderId()))
         {
             throw new ApiException("OrderId cannot be Empty!");
         }

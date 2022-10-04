@@ -6,8 +6,10 @@ import com.increff.pos.model.DataUI.InventoryDataUI;
 import com.increff.pos.model.InventoryData;
 import com.increff.pos.model.InventoryForm;
 import com.increff.pos.model.InventoryReport;
+import com.increff.pos.pojo.BrandPojo;
 import com.increff.pos.pojo.InventoryPojo;
 import com.increff.pos.pojo.ProductPojo;
+import com.increff.pos.service.BrandService;
 import com.increff.pos.service.InventoryService;
 import com.increff.pos.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,7 @@ import static com.increff.pos.dto.dtoHelper.InventoryDtoHelper.*;
 import static com.increff.pos.util.DataUtil.checkNotNullBulkUtil;
 import static com.increff.pos.util.ErrorUtil.throwError;
 import static java.util.Objects.isNull;
+import static org.springframework.util.CollectionUtils.isEmpty;
 
 @Service
 public class InventoryDto {
@@ -32,6 +35,9 @@ public class InventoryDto {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private BrandService brandService;
 
     public InventoryData get(String barcode)throws ApiException
     {
@@ -61,7 +67,7 @@ public class InventoryDto {
 
     public Integer bulkAdd(List<InventoryForm> inventoryFormList)throws ApiException
     {
-        if(CollectionUtils.isEmpty(inventoryFormList))
+        if(isEmpty(inventoryFormList))
         {
             throw new ApiException("Empty Inventory Form List");
         }
@@ -112,7 +118,7 @@ public class InventoryDto {
                 barcodeSet.add(inventoryForm.getBarcode());
             }
         }
-        if(!CollectionUtils.isEmpty(errorList))
+        if(!isEmpty(errorList))
             throwError(errorList);
     }
 
@@ -139,9 +145,28 @@ public class InventoryDto {
         return inventoryForm;
     }
 
-    public List<InventoryReport> getInventoryReport()
+    public List<InventoryReport> getInventoryReport()throws ApiException
     {
-        return inventoryService.getInventoryReport();
+        List<InventoryPojo> inventoryPojoList = inventoryService.getAll();
+        if(isEmpty(inventoryPojoList))
+        {
+            throw new ApiException("No Inventory");
+        }
+
+        List<InventoryReport> inventoryReportList = new ArrayList<>();
+        for(InventoryPojo inventoryPojo : inventoryPojoList)
+        {
+            InventoryReport inventoryReport = new InventoryReport();
+            ProductPojo productPojo = productService.selectByBarcode(inventoryPojo.getBarcode());
+            BrandPojo brandPojo = brandService.get(productPojo.getBrandCategoryId());
+
+            inventoryReport.setBrand(brandPojo.getBrand());
+            inventoryReport.setCategory(brandPojo.getCategory());
+            inventoryReport.setQuantity(inventoryPojo.getQuantity());
+
+            inventoryReportList.add(inventoryReport);
+        }
+        return inventoryReportList;
     }
 
 }

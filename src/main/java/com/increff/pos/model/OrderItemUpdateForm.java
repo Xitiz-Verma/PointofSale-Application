@@ -10,8 +10,8 @@ import javax.validation.constraints.NotNull;
 @Setter
 public class OrderItemUpdateForm {
 
-    @NotNull(message="Id cant be Null")
-    private Integer id;
+    @NotNull(message="orderId cant be Null")
+    private Integer orderId;
 
     @NotNull(message = "Barcode cant be Null")
     private String barcode;

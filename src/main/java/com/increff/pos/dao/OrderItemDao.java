@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public class OrderItemDao extends AbstractDao{
 
-    private static final String DELETE="delete from OrderItemPojo where id=:id";
+    private static final String DELETE="delete from OrderItemPojo where orderId=:orderId and barcode=:barcode";
 
     private static final String SELECT_BY_ORDER_ID = "select p from OrderItemPojo p where orderId=:orderId";
 
@@ -63,10 +63,11 @@ public class OrderItemDao extends AbstractDao{
         //SYMBOLIC
     }
 
-    public int delete(int id)
+    public int delete(int orderId,String barcode)
     {
         Query query = em().createQuery(DELETE);
-        query.setParameter("id",id);
+        query.setParameter("orderId",orderId);
+        query.setParameter("barcode",barcode);
         return query.executeUpdate();
 
     }

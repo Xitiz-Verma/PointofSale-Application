@@ -52,11 +52,6 @@ public class OrderService {
     public void updateOrderStatusPlaced(Integer id) throws ApiException
     {
         OrderPojo orderPojo=getCheck(id);
-//        OrderPojo orderPojo=orderDao.select(id);
-//        if(isNull(orderPojo))
-//        {
-//            throw new ApiException("Order with given id does not exist, id : "+ id);
-//        }
         orderPojo.setOrderPlaced(true);
         ZonedDateTime date = ZonedDateTime.now(ZoneId.systemDefault());
         orderPojo.setTime(date);

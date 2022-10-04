@@ -21,7 +21,7 @@ function createOrder() {
     },
     processData: false,
     type: 'POST',
-    url: 'http://localhost:9000/pos/orders'
+    url: 'http://localhost:9001/PointOfSale/orders'
   });
 }
 
@@ -73,7 +73,7 @@ function loadOrder() {
     },
     processData: false,
     type: 'GET',
-    url: 'http://localhost:9000/pos/orders'
+    url: 'http://localhost:9001/PointOfSale/orders'
   });
 }
 function invoice(orderId) {
@@ -101,7 +101,7 @@ function invoice(orderId) {
     },
     processData: false,
     type: 'GET',
-    url: `http://localhost:9000/pos/orders/${orderId}/invoices`
+    url: `http://localhost:9001/PointOfSale/orders/${orderId}/invoices`
   });
 }
 function placeOrder(id) {
@@ -124,7 +124,7 @@ function placeOrder(id) {
     },
     processData: false,
     type: 'GET',
-    url: `http://localhost:9000/pos/orders/${id}/order-items`
+    url: `http://localhost:9001/PointOfSale/orders/${id}/order-items`
   });
 
 }
@@ -145,7 +145,7 @@ function placeOrderUtil(id) {
     },
     processData: false,
     type: 'PUT',
-    url: `http://localhost:9000/pos//orders/${id}/place-order`
+    url: `http://localhost:9001/PointOfSale//orders/${id}/place-order`
   });
 }
 
@@ -232,7 +232,7 @@ function ViewOrder(orderId, orderStatus) {
     },
     processData: false,
     type: 'GET',
-    url: `http://localhost:9000/pos/orders/${orderId}/order-items`
+    url: `http://localhost:9001/PointOfSale/orders/${orderId}/order-items`
   });
 
 
@@ -311,7 +311,7 @@ function editOrderItemUtil(id, quantity, sellingPrice, orderId) {
       },
       processData: false,
       type: 'PUT',
-      url: `http://localhost:9000/pos/order-items/${id}`
+      url: `http://localhost:9001/PointOfSale/order-items/${id}`
     });
   }
 }
@@ -336,7 +336,7 @@ function deleteOrderItemUtil(id, orderId) {
     },
     processData: false,
     type: 'DELETE',
-    url: `http://localhost:9000/pos/order-items/${id}`
+    url: `http://localhost:9001/PointOfSale/order-items/${id}`
   });
 }
 
@@ -403,7 +403,7 @@ function addOrderItemUtil(orderId) {
       },
       processData: false,
       type: 'POST',
-      url: 'http://localhost:9000/pos/order-items'
+      url: 'http://localhost:9001/PointOfSale/order-items'
     });
 
   }

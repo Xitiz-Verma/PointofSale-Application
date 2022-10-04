@@ -3,14 +3,14 @@ package com.increff.pos.controller;
 import com.increff.pos.dto.OrderDto;
 import com.increff.pos.exception.ApiException;
 import com.increff.pos.model.OrderData;
+import com.increff.pos.model.SalesReport;
+import com.increff.pos.model.SalesReportForm;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
 import java.time.ZonedDateTime;
@@ -54,9 +54,15 @@ public class OrderController {
 
     @ApiOperation(value="Get Order Invoice for Order Id")
     @RequestMapping(path="/{orderId}/invoices", method = RequestMethod.GET)
-    public byte[] getOrderInvoice(@PathVariable int orderId)throws ApiException, IOException, TransformerException
+    public void getOrderInvoice(@PathVariable int orderId, HttpServletResponse response)throws ApiException, IOException, TransformerException
     {
-        return orderDto.getOrderInvoice(orderId);
+        orderDto.getOrderInvoice(orderId, response);
+    }
+
+    @ApiOperation(value = "Get Sales report ")
+    @RequestMapping(path = "/orders/sales-reports", method = RequestMethod.POST)
+    public List<SalesReport> getsSalesReport(@RequestBody SalesReportForm salesReportForm) throws ApiException {
+        return orderDto.getSalesReport(salesReportForm);
     }
 
 

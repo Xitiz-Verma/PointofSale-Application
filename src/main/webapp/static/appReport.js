@@ -1,5 +1,3 @@
-
-
 function salesReport(){
 let toDate = new Date(document.getElementById("toDate").value.trim());
 let fromDate = new Date(document.getElementById("fromDate").value.trim());
@@ -27,7 +25,7 @@ $.ajax({
      },
      processData: false,
      type: 'POST',
-     url: 'http://localhost:9000/pos/orders/sales-reports'
+     url: 'http://localhost:9001/PointOfSale/orders/sales-reports'
  });
 
 }
@@ -48,7 +46,7 @@ $.ajax({
      },
      processData: false,
      type: 'GET',
-     url: 'http://localhost:9000/pos/brands/brand-reports'
+     url: 'http://localhost:9001/PointOfSale/brands/brand-reports'
  });
 
   event.preventDefault();
@@ -70,7 +68,7 @@ $.ajax({
      },
      processData: false,
      type: 'GET',
-     url: 'http://localhost:9000/pos/inventory/inventory-reports'
+     url: 'http://localhost:9001/PointOfSale/inventory/inventory-reports'
  });
   event.preventDefault();
 }

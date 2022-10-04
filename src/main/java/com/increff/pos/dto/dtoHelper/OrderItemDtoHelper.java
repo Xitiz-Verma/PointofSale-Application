@@ -14,7 +14,7 @@ public class OrderItemDtoHelper {
         orderItemData.setId(orderItemPojo.getId());
         orderItemData.setOrderId(orderItemPojo.getOrderId());
         orderItemData.setBarcode(orderItemPojo.getBarcode());
-        orderItemData.setQuantity(orderItemData.getQuantity());
+        orderItemData.setQuantity(orderItemPojo.getQuantity());
         orderItemData.setSellingPrice(orderItemPojo.getSellingPrice());
         return orderItemData;
     }
@@ -35,7 +35,7 @@ public class OrderItemDtoHelper {
         orderItemPojo.setQuantity(orderItemUpdateForm.getQuantity());
         orderItemPojo.setBarcode(orderItemUpdateForm.getBarcode());
         orderItemPojo.setSellingPrice(orderItemUpdateForm.getSellingPrice());
-        orderItemPojo.setId(orderItemUpdateForm.getId());
+        orderItemPojo.setOrderId(orderItemUpdateForm.getOrderId());
         return orderItemPojo;
     }
 

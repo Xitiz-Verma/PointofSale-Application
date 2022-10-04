@@ -1,6 +1,6 @@
 package com.increff.pos.util;
 
-import com.increff.pos.model.OrderItemDataList;
+import com.increff.pos.model.InvoiceData;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -11,10 +11,10 @@ import java.util.Base64;
 
 public class HelperUtil {
 
-    public static String jaxbObjectToXML(OrderItemDataList orderItemList) {
+    public static String jaxbObjectToXML(InvoiceData orderItemList) {
         try {
             //Create JAXB Context
-            JAXBContext jaxbContext = JAXBContext.newInstance(OrderItemDataList.class);
+            JAXBContext jaxbContext = JAXBContext.newInstance(InvoiceData.class);
 
             //Create Marshaller
             Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
@@ -38,7 +38,7 @@ public class HelperUtil {
         return "";
     }
     public static byte[] returnFileStream() throws FileNotFoundException {
-        String path = "/Users/rahulverma/Downloads/git/POS/src/invoice.pdf";
+        String path = "";
         File file = new File(path);
         if (file.exists()) {
 
