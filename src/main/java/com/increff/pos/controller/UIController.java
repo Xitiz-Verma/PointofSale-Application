@@ -36,14 +36,14 @@ public class UIController {
         return mav("order.html");
     }
 
-    @RequestMapping(value = "ui/reports")
+    @RequestMapping(value = "/ui/reports")
     public ModelAndView report() {
         return mav("reports.html");
     }
 
     private ModelAndView mav(String page) {
 
-        ModelAndView mav = new ModelAndView();
+        ModelAndView mav = new ModelAndView(page);
         mav.addObject("baseUrl", baseUrl);
         return mav;
     }

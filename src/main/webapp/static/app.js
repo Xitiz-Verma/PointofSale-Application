@@ -51,7 +51,7 @@ function loadBrand()
             for(var i=0;i<obj.length;i++)
             {
                 str+=`<tr>
-                        <th scope="row">$(i+1)</th>
+                        <th scope="row">${i+1}</th>
                         <td>${obj[i]['brand']}</td>
                         <td>${obj[i]['category']}</td>
                                
