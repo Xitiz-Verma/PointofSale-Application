@@ -1,7 +1,6 @@
 package com.increff.pos.dto;
 
 import com.increff.pos.exception.ApiException;
-import com.increff.pos.model.BrandForm;
 import com.increff.pos.model.DataUI.InventoryDataUI;
 import com.increff.pos.model.InventoryData;
 import com.increff.pos.model.InventoryForm;
@@ -60,7 +59,7 @@ public class InventoryDto {
         validateInventoryForm(inventoryForm);
         inventoryForm=normalize(inventoryForm);
         InventoryPojo inventoryPojo = convertInventoryFormtoInventoryPojo(inventoryForm);
-        addProductId(inventoryPojo);
+        validateBarcode(inventoryPojo);
         inventoryService.add(inventoryPojo);
         return convertInventoryFormtoInventoryDataUI(inventoryForm);
     }
@@ -76,7 +75,7 @@ public class InventoryDto {
         for(InventoryForm inventoryForm : inventoryFormList)
         {
             InventoryPojo inventoryPojo=convertInventoryFormtoInventoryPojo(inventoryForm);
-            addProductId(inventoryPojo);
+            validateBarcode(inventoryPojo);
             inventoryPojoList.add(inventoryPojo);
         }
         inventoryService.bulkAdd(inventoryPojoList);
@@ -87,6 +86,8 @@ public class InventoryDto {
     {
         validateInventoryForm(inventoryForm);
         inventoryForm=normalize(inventoryForm);
+        InventoryPojo inventoryPojo=convertInventoryFormtoInventoryPojo(inventoryForm);
+        validateBarcode(inventoryPojo);
         inventoryService.update(inventoryForm);
         return convertInventoryFormtoInventoryDataUI(inventoryForm);
     }
@@ -122,20 +123,23 @@ public class InventoryDto {
             throwError(errorList);
     }
 
-    private void addProductId(InventoryPojo inventoryPojo)throws ApiException
+    private void validateBarcode(InventoryPojo inventoryPojo)throws ApiException
     {
-        productService.selectByBarcode(inventoryPojo.getBarcode());
+        if(isNull(productService.selectByBarcode(inventoryPojo.getBarcode())))
+        {
+            throw new ApiException("Product with given barcode does not exist");
+        }
     }
 
     public void validateInventoryForm(InventoryForm inventoryForm)throws ApiException
     {
         if(isNull(inventoryForm.getBarcode()) || inventoryForm.getBarcode().isEmpty())
         {
-            throw new ApiException("Brand cannot be Empty!");
+            throw new ApiException("Barcode cannot be Empty!");
         }
         if(isNull(inventoryForm.getQuantity()) || inventoryForm.getQuantity()<0)
         {
-            throw new ApiException("Category cannot be Empty or Negative!");
+            throw new ApiException("Quantity cannot be Empty or Negative!");
         }
     }
 

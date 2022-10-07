@@ -4,7 +4,8 @@
 <head th:replace = "snippets.html :: name_head"></head>
 
 <body>
-    <nav th:replace = "snippets.html :: name_site_nav"></nav>
+    <nav th:replace="snippets.html :: name_site_navbar">
+    </nav>
     <div class = "container-fluid">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -133,7 +134,7 @@
                             <div class="form-group">
                                 <a class="" th:href="@{/static/productTemplate.tsv}" download>Download Template</a>
                             </div>
-                            <div id="uploadModalFormErrorDiv" style="color:red";font-size=14px;">
+                            <div id="uploadModalFormErrorDiv" style="color:red;font-size=14px;">
                             <!--ERROR-->
                             </div>
                             <div class="modal-footer">

@@ -186,7 +186,7 @@ function ViewOrder(orderId, orderStatus) {
                                   </tr>`;
         }
 
-        str += `<td>Total Qunatity : ${totalQty}
+        str += `<td>Total Quantity : ${totalQty}
         </td> <td>Total Cost : ${totalCost.toFixed(2)}</td>
          </tbody></table>`
       }
@@ -220,7 +220,7 @@ function ViewOrder(orderId, orderStatus) {
                                         </tr>`;
         }
 
-        str += ` <td>Total Qunatity : ${totalQty}
+        str += ` <td>Total Quantity : ${totalQty}
         </td> <td>Total Cost : ${totalCost.toFixed(2)}</td> </tbody></table> <td><button type='button' class='btn btn-primary' onclick=addOrderItem(${orderId})>Add</button></td>`
       }
       body.innerHTML = str;
