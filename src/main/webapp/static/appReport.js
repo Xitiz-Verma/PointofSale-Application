@@ -30,27 +30,6 @@ $.ajax({
 
 }
 
-function brandReport(){
-console.log("brandReport")
-$.ajax({
-     contentType: 'application/json',
-     dataType: 'json',
-     success: function(data){
-         console.log("brandReport generated",data);
-         writeFileData(data,"Brand Report");
-     },
-     error: function(e){
-     console.log(e)
-          $("#confirmModalBody").html(`${e['responseJSON']['description']}`);
-                   $("#brandDelete").modal('show');
-     },
-     processData: false,
-     type: 'GET',
-     url: 'http://localhost:9001/PointOfSale/brands/brand-reports'
- });
-
-  event.preventDefault();
-}
 
 
 function inventoryReport(){
