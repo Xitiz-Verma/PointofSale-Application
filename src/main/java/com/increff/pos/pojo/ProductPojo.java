@@ -16,7 +16,7 @@ public class ProductPojo extends AbstractPojo {
 
     @Id
     @TableGenerator(name = PRODUCT_GENERATOR, initialValue = PRODUCT_INITIAL_VALUE)
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = PRODUCT_GENERATOR)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = PRODUCT_GENERATOR)
     private Integer id;
 
     @Column(nullable = false)

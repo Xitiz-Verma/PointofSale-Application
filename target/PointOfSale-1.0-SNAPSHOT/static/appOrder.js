@@ -166,7 +166,7 @@ function ViewOrder(orderId, orderStatus) {
                             <thead class="thead-dark">
                             <tr>
                               <th scope="col">#</th>
-                              <th scope="col">ProductId</th>
+                              <th scope="col">Barcode</th>
                               <th scope="col">Quantity</th>
                               <th scope="col">Selling Price</th>
 
@@ -180,13 +180,13 @@ function ViewOrder(orderId, orderStatus) {
           str += `
                       <tr><th scope="row">${i + 1}</th>
 
-                                    <td>${obj[i]['productId']}</td>
+                                    <td>${obj[i]['barcode']}</td>
                                     <td>${obj[i]['quantity']}</td>
                                     <td>${obj[i]['sellingPrice']}</td>
                                   </tr>`;
         }
 
-        str += `<td>Total Qunatity : ${totalQty}
+        str += `<td>Total Quantity : ${totalQty}
         </td> <td>Total Cost : ${totalCost.toFixed(2)}</td>
          </tbody></table>`
       }
@@ -198,7 +198,7 @@ function ViewOrder(orderId, orderStatus) {
                                   <thead class="thead-dark">
                                   <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">ProductId</th>
+                                    <th scope="col">Barcode</th>
                                     <th scope="col">Quantity</th>
                                     <th scope="col">Selling Price</th>
                                     <th scope="col">Edit</th>
@@ -212,15 +212,15 @@ function ViewOrder(orderId, orderStatus) {
           totalQty += obj[i]['quantity'];
           str += `
                             <tr><th scope="row">${i + 1}</th>
-                                          <td>${obj[i]['productId']}</td>
+                                          <td>${obj[i]['barcode']}</td>
                                           <td>${obj[i]['quantity']}</td>
                                           <td>${obj[i]['sellingPrice']}</td>
-                                          <td><button type='button' class='btn btn-primary' onclick=editOrderItem(${obj[i]['id']},${obj[i]['orderId']},${obj[i]['productId']},${obj[i]['quantity']},${obj[i]['sellingPrice']})>Edit</button></td>
+                                          <td><button type='button' class='btn btn-primary' onclick=editOrderItem(${obj[i]['id']},${obj[i]['orderId']},${obj[i]['barcode']},${obj[i]['quantity']},${obj[i]['sellingPrice']})>Edit</button></td>
                                           <td><button type='button' class='btn btn-primary' onclick=deleteOrderItem(${obj[i]['id']},${obj[i]['orderId']})>Delete</button></td>
                                         </tr>`;
         }
 
-        str += ` <td>Total Qunatity : ${totalQty}
+        str += ` <td>Total Quantity : ${totalQty}
         </td> <td>Total Cost : ${totalCost.toFixed(2)}</td> </tbody></table> <td><button type='button' class='btn btn-primary' onclick=addOrderItem(${orderId})>Add</button></td>`
       }
       body.innerHTML = str;
@@ -238,18 +238,18 @@ function ViewOrder(orderId, orderStatus) {
 
 }
 
-function editOrderItem(id, orderId, productId, quantity, sellingPrice) {
+function editOrderItem(id, orderId, barcode, quantity, sellingPrice) {
   $('#orderItemModal').modal('hide');
   let divi = document.getElementById('modalFormDataDiv')
   let str = `
             <div class="form-group" >
-              <label for="productInput">Order Id</label><br>
-              <label class="btn btn-secondary" for="productInput" style="width:75.8px;padding:.375rem .75rem;">${orderId}</label>
+              <label for="orderIdInput">Order Id</label><br>
+              <label class="btn btn-secondary" for="orderIdInput" style="width:75.8px;padding:.375rem .75rem;">${orderId}</label>
 
             </div>
             <div class="form-group" >
-              <label for="productInput">Product Id</label><br>
-              <label class="btn btn-secondary" for="productInput" style="width:75.8px;padding:.375rem .75rem;">${productId}</label>
+              <label for="barcodeInput">Barcode</label><br>
+              <label class="btn btn-secondary" for="barcodeInput" style="width:75.8px;padding:.375rem .75rem;">${barcode}</label>
 
             </div>
            <div class="form-group" >
@@ -278,7 +278,7 @@ function deleteOrderItem(id, orderId) {
 
 }
 
-function editOrderItemUtil(id, quantity, sellingPrice, orderId) {
+function editOrderItemUtil(barcode, quantity, sellingPrice, orderId) {
   quantityInput = document.getElementById('quantityInput').value.trim()
   sellingPriceInput = document.getElementById('sellingPriceInput').value.trim()
   console.log(parseInt(quantityInput), sellingPriceInput, quantity, sellingPrice)
@@ -348,8 +348,8 @@ function addOrderItem(orderId) {
   let divi = document.getElementById('modalFormDataDiv')
   let str = `
             <div class="form-group" >
-              <label for="productInput">Product Id</label>
-              <input type="number" class="form-control" id="productInput"  name="category" aria-describedby="text" placeholder="Enter Product Id" autocomplete="off" minlength="1">
+              <label for="barcodeInput">Barcode</label>
+              <input type="number" class="form-control" id="barcodeInput"  name="category" aria-describedby="text" placeholder="Enter Barcode" autocomplete="off" minlength="1">
             </div>
             <div class="form-group" >
               <label for="quantityInput">Quantity</label>
@@ -369,14 +369,14 @@ function addOrderItem(orderId) {
 
 function addOrderItemUtil(orderId) {
 
-  productInput = document.getElementById('productInput').value.trim()
+  barcodeInput = document.getElementById('barcodeInput').value.trim()
   quantityInput = document.getElementById('quantityInput').value.trim()
   sellingPriceInput = document.getElementById('sellingPriceInput').value.trim()
-  console.log(productInput, parseInt(quantityInput), sellingPriceInput)
+  console.log(barcodeInput, parseInt(quantityInput), sellingPriceInput)
   let p1 = /^[0-9]+$/
   let p2 = /^[0-9]+$|^[0-9]+\.[0]*$/
   let p3 = /^[0-9]+$|^[0-9]+\.[0-9]*$/
-  if (!productInput.match(p1) || !quantityInput.match(p2) || !sellingPriceInput.match(p3)) {
+  if (!barcodeInput.match(p1) || !quantityInput.match(p2) || !sellingPriceInput.match(p3)) {
     document.getElementById('modalFormErrorDiv').innerHTML = "* Invalid input"
   }
   else {
@@ -384,7 +384,7 @@ function addOrderItemUtil(orderId) {
       contentType: 'application/json',
       data: JSON.stringify({
         "orderId": orderId,
-        "productId": parseInt(productInput),
+        "barcode": parseInt(barcodeInput),
         "quantity": parseInt(quantityInput),
         "sellingPrice": sellingPriceInput
       }),

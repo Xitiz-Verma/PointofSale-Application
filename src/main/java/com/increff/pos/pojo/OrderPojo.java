@@ -17,7 +17,7 @@ public class OrderPojo extends AbstractPojo{
 
     @TableGenerator(name=ORDER_GENERATOR, initialValue = ORDER_INTIAL_VALUE)
     @Id
-    @GeneratedValue(strategy= GenerationType.TABLE, generator = ORDER_GENERATOR)
+    @GeneratedValue(strategy= GenerationType.SEQUENCE, generator = ORDER_GENERATOR)
     private Integer id;
 
     @Column(nullable = false)
